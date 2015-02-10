@@ -1,0 +1,38 @@
+
+
+boolean isDefaultEnvironment() {
+  !project.hasProperty('overrideBuildEnvironment')
+}
+
+File getEnvironmentScript()
+{
+  final File env = file(defaultEnvironment ? 'defaultEnvironment.gradle' : project.overrideBuildEnvironment)
+  assert env.isFile() : "The environment script [$env] does not exists or is not a file."
+  return env
+}
+
+apply from: environmentScript
+
+
+subprojects {
+  plugins.withType(JavaPlugin) {
+
+    dependencies {
+      testCompile spec.external.testng
+      compile spec.external.'commonsLang'
+    }
+
+    test {
+      afterSuite { desc, result ->
+        if (!desc.parent) {
+          println ":${project.name} -- Executed ${result.testCount} tests: ${result.successfulTestCount} succeeded, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped"
+        }
+      }
+    }
+
+    test.useTestNG() {
+      excludeGroups 'integration'
+    }
+  }
+}
+
