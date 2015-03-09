@@ -1,5 +1,3 @@
-package com.linkedin.urls.detection;
-
 /**
  * Copyright 2015 LinkedIn Corp. All rights reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
@@ -8,7 +6,10 @@ package com.linkedin.urls.detection;
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *
- *
+ */
+package com.linkedin.urls.detection;
+
+/**
  * Class used to read a text input character by character. This also gives the ability to backtrack.
  */
 public class InputTextReader {

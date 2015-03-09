@@ -1,5 +1,3 @@
-package com.linkedin.urls.detection;
-
 /**
  * Copyright 2015 LinkedIn Corp. All rights reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
@@ -8,8 +6,10 @@ package com.linkedin.urls.detection;
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *
- *
- *
+ */
+package com.linkedin.urls.detection;
+
+/**
  * The options to use when detecting urls. This enum is used as a bit mask to be able to set multiple options at once.
  */
 public enum UrlDetectorOptions {

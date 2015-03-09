@@ -1,5 +1,3 @@
-package com.linkedin.urls.detection;
-
 /**
  * Copyright 2015 LinkedIn Corp. All rights reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
@@ -8,7 +6,10 @@ package com.linkedin.urls.detection;
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *
- *
+ */
+package com.linkedin.urls.detection;
+
+/**
  * The domain name reader reads input from a InputTextReader and validates if the content being read is a valid domain name.
  * After a domain name is read, the returning status is what to do next. If the domain is valid but a specific character is found,
  * the next state will be to read another part for the rest of the url. For example, if a "?" is found at the end and the

@@ -1,11 +1,3 @@
-package com.linkedin.urls.detection;
-
-import com.linkedin.urls.url.Url;
-import java.util.List;
-import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
-
 /**
  * Copyright 2014 LinkedIn Corp. All rights reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
@@ -15,6 +7,14 @@ import org.testng.annotations.Test;
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *
  */
+package com.linkedin.urls.detection;
+
+import com.linkedin.urls.url.Url;
+import java.util.List;
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
 public class TestUriDetection {
 
   @Test

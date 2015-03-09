@@ -1,10 +1,3 @@
-package com.linkedin.urls.url;
-
-import com.linkedin.urls.detection.CharUtils;
-import com.linkedin.urls.detection.InputTextReader;
-import java.net.IDN;
-import java.util.Stack;
-
 /**
  * Copyright 2015 LinkedIn Corp. All rights reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
@@ -14,6 +7,13 @@ import java.util.Stack;
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *
  */
+package com.linkedin.urls.url;
+
+import com.linkedin.urls.detection.CharUtils;
+import com.linkedin.urls.detection.InputTextReader;
+import java.net.IDN;
+import java.util.Stack;
+
 class UrlUtil {
 
   private static final char TAB = 0x09;
