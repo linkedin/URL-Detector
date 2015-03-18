@@ -81,9 +81,9 @@ public class HostNormalizer {
       return;
     }
 
-    host = UrlUtil.removeExtraDots(host).replace("\\x", "%");
+    host = UrlUtil.removeExtraDots(host);
 
-    _normalizedHost = UrlUtil.encode(host);
+    _normalizedHost = UrlUtil.encode(host).replace("\\x", "%");
   }
 
   /**

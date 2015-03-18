@@ -295,6 +295,8 @@ public class UrlDetector {
         length = _buffer.length(); //set length to be right after the scheme
     } else if (_buffer.length() > 0 && _options.hasFlag(UrlDetectorOptions.ALLOW_SINGLE_LEVEL_DOMAIN)
         && _reader.canReadChars(1)) { //takes care of case like hi:
+      _reader.goBack(); //unread the ":" so readDomainName can take care of the port
+      _buffer.delete(_buffer.length() - 1, _buffer.length());
       readDomainName(_buffer.toString());
     } else {
       readEnd(ReadEndState.InvalidUrl);

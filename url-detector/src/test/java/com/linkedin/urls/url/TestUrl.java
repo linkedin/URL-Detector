@@ -32,10 +32,9 @@ public class TestUrl {
   }
 
   @Test(dataProvider = "getUsernamePasswordUrls")
-  public void testUsernamePasswordUrls(String testString, String host, String path, String username, String password)
+  public void testUsernamePasswordUrls(String testInput, String host, String path, String username, String password)
       throws MalformedURLException {
-    Url url = Url.create(testString);
-    Assert.assertNotNull(url);
+    Url url = Url.create(testInput);
     Assert.assertEquals(url.getHost(), host);
     Assert.assertEquals(url.getPath(), path);
     Assert.assertEquals(url.getUsername(), username);
@@ -55,10 +54,9 @@ public class TestUrl {
   }
 
   @Test(dataProvider = "getPortUrls")
-  public void testPort(String testString, String host, String path, int port)
+  public void testPort(String testInput, String host, String path, int port)
       throws MalformedURLException {
-    Url url = Url.create(testString);
-    Assert.assertNotNull(url);
+    Url url = Url.create(testInput);
     Assert.assertEquals(url.getHost(), host);
     Assert.assertEquals(url.getPath(), path);
     Assert.assertEquals(url.getPort(), port);
@@ -76,10 +74,9 @@ public class TestUrl {
   }
 
   @Test(dataProvider = "getQueryUrls")
-  public void testQuery(String testString, String host, String path, String query)
+  public void testQuery(String testInput, String host, String path, String query)
       throws MalformedURLException {
-    Url url = Url.create(testString);
-    Assert.assertNotNull(url);
+    Url url = Url.create(testInput);
     Assert.assertEquals(url.getHost(), host);
     Assert.assertEquals(url.getPath(), path);
     Assert.assertEquals(url.getQuery(), query);
@@ -106,13 +103,28 @@ public class TestUrl {
   }
 
   @Test(dataProvider = "getUrlsAndHosts")
-  public void testHostAndFullUrl(String testString, String host, String fullUrl)
+  public void testHostAndFullUrl(String testInput, String host, String fullUrl)
       throws MalformedURLException {
-    Url url = Url.create(testString);
-    Assert.assertNotNull(url);
-    Assert.assertEquals(url.getHost(), host, testString);
+    Url url = Url.create(testInput);
+    Assert.assertEquals(url.getHost(), host, testInput);
     Assert.assertEquals(url.getFullUrl(), fullUrl);
     int fragmentIndex = fullUrl.indexOf("#");
     Assert.assertEquals(url.getFullUrlWithoutFragment(), fragmentIndex == -1 ? fullUrl : fullUrl.substring(0, fragmentIndex));
+  }
+
+  @DataProvider
+  private Object[][] getSingleDomainUrls() {
+    return new Object[][] {
+        {"localhost:9000/", "localhost", 9000, "http://localhost:9000/"},
+        {"go/tj", "go", 80, "http://go/tj"}
+    };
+  }
+
+  @Test(dataProvider = "getSingleDomainUrls")
+  public void testSingleDomainUrls(String testInput, String host, int port, String fullUrl) throws MalformedURLException {
+    Url url = Url.create(testInput);
+    Assert.assertEquals(url.getHost(), host);
+    Assert.assertEquals(url.getPort(), port);
+    Assert.assertEquals(url.getFullUrl(), fullUrl);
   }
 }

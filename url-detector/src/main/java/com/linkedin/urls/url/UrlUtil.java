@@ -11,14 +11,9 @@ package com.linkedin.urls.url;
 
 import com.linkedin.urls.detection.CharUtils;
 import com.linkedin.urls.detection.InputTextReader;
-import java.net.IDN;
 import java.util.Stack;
 
 class UrlUtil {
-
-  private static final char TAB = 0x09;
-  private static final char CR = 0x0d;
-  private static final char LF = 0x0a;
 
   /**
    * Decodes the url by iteratively removing hex characters with backtracking.
@@ -65,7 +60,7 @@ class UrlUtil {
     StringBuilder stringBuilder = new StringBuilder(urlPart);
     for (int i = 0; i < stringBuilder.length(); i++) {
       char curr = stringBuilder.charAt(i);
-      if (curr == TAB || curr == CR || curr == LF) {
+      if (CharUtils.isWhiteSpace(curr)) {
         stringBuilder.deleteCharAt(i);
       }
     }

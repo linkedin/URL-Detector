@@ -53,7 +53,7 @@ public class InputTextReader {
    */
   public char read() {
     char chr = _content[_index++];
-    return (chr == '\n' || chr == '\t') ? ' ' : chr;
+    return CharUtils.isWhiteSpace(chr) ? ' ' : chr;
   }
 
   /**

@@ -1,10 +1,10 @@
 /**
  * Copyright 2015 LinkedIn Corp. All rights reserved.
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * 
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *
  */
 package com.linkedin.urls.url;
@@ -30,12 +30,19 @@ public class TestPathNormalizer {
             "/uploads/%20%20%20%20/.verify/.eBaysecure=updateuserdataxplimnbqmn-xplmvalidateinfoswqpcmlx=hgplmcx/"},
         {"/%257Ea%2521b%2540c%2523d%2524e%25f%255E00%252611%252A22%252833%252944_55%252B",
             "/~a!b@c%23d$e%25f^00&11*22(33)44_55+"},
-        {"/lala/.././../..../","/lala/..../"}
+        {"/lala/.././../..../", "/..../"},
+        {"//asdfasdf/awef/sadf/sdf//", "/asdfasdf/awef/sadf/sdf/"},
+        {"/", "/"},
+        {"/a/../b/c", "/b/c"},
+        {"/blah/..", "/"},
+        {"../", "../"},
+        {"/asdf/.", "/asdf/."}
+
     };
   }
 
   @Test(dataProvider = "getPaths")
-  public void testSanityAddresses(String path, String expectedPath) {
+  public void testPaths(String path, String expectedPath) {
     PathNormalizer pathNormalizer = new PathNormalizer();
 
     Assert.assertEquals(pathNormalizer.normalizePath(path), expectedPath);

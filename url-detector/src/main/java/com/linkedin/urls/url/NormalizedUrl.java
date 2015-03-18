@@ -25,9 +25,8 @@ public class NormalizedUrl extends Url {
   /**
    * Returns a normalized url given a single url.
    */
-  public static NormalizedUrl createNormalized(String url)
-      throws MalformedURLException {
-    return normalize(create(url));
+  public static NormalizedUrl create(String url) throws MalformedURLException {
+    return normalize(Url.create(url));
   }
 
   /**

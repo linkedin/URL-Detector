@@ -58,6 +58,10 @@ public class CharUtils {
     return (a == '.' || a == '\u3002' || a == '\uFF0E' || a == '\uFF61');
   }
 
+  public static boolean isWhiteSpace(char a) {
+    return (a == '\n' || a == '\t' || a == '\r' || a == ' ');
+  }
+
   /**
    * Splits a string without the use of a regex, which could split either by isDot() or %2e
    * @param input the input string that will be split by dot
@@ -83,6 +87,5 @@ public class CharUtils {
     }
     splitList.add(section.toString());
     return splitList.toArray(new String[splitList.size()]);
-
   }
 }

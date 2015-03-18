@@ -9,6 +9,7 @@
  */
 package com.linkedin.urls.url;
 
+import java.util.Stack;
 import org.apache.commons.lang3.StringUtils;
 
 class PathNormalizer {
@@ -23,31 +24,50 @@ class PathNormalizer {
     if (StringUtils.isEmpty(path)) {
       return path;
     }
-    path = UrlUtil.removeSpecialSpaces(path);
     path = UrlUtil.decode(path);
     path = sanitizeDotsAndSlashes(path);
     return UrlUtil.encode(path);
   }
 
   /**
-   * Replaces "/../" and "/./" with "/" recursively.
+   * 1. Replaces "/./" with "/" recursively.
+   * 2. "/blah/asdf/.." -> "/blah"
+   * 3. "/blah/blah2/blah3/../../blah4" -> "/blah/blah4"
+   * 4. "//" -> "/"
+   * 5. Adds a slash at the end if there isn't one
    */
   private static String sanitizeDotsAndSlashes(String path) {
     StringBuilder stringBuilder = new StringBuilder(path);
+    Stack<Integer> slashIndexStack = new Stack<Integer>();
     int index = 0;
-    while (index < stringBuilder.length() - 2) {
-      if ( stringBuilder.charAt(index) == '/' && stringBuilder.charAt(index + 1) == '.') {
-        if (index + 3 < stringBuilder.length() && stringBuilder.charAt(index + 2) == '.' &&
-            stringBuilder.charAt(index + 3) == '/') {
-          stringBuilder.delete(index, index + 3); // "/../" -> "/"
-          index--; // backtrack so we can detect if this / is part of another replacement
-        } else if (stringBuilder.charAt(index + 2) == '/') {
-          stringBuilder.delete(index, index + 2); // "/./" -> "/"
-          index--; // backtrack so we can detect if this / is part of another replacement
+    while (index < stringBuilder.length() - 1) {
+      if (stringBuilder.charAt(index) == '/') {
+        slashIndexStack.add(index);
+        if (stringBuilder.charAt(index + 1) == '.') {
+          if (index < stringBuilder.length() - 2) {
+            if (stringBuilder.charAt(index + 2) == '.') {
+              slashIndexStack.pop();
+              int endIndex = index + 3;
+              // backtrack so we can detect if this / is part of another replacement
+              index = slashIndexStack.empty() ? 0 : slashIndexStack.pop();
+              stringBuilder.delete(index, endIndex); // "/asdf/../" -> ""
+            } else if (stringBuilder.charAt(index + 2) == '/') {
+              stringBuilder.delete(index, index + 2); // "/./" -> "/"
+              index--; // backtrack so we can detect if this / is part of another replacement
+            }
+          }
+        } else if (stringBuilder.charAt(index + 1) == '/') {
+          stringBuilder.deleteCharAt(index);
+          index--;
         }
       }
       index++;
     }
+
+    if (stringBuilder.length() == 0) {
+      stringBuilder.append("/"); //Every path has at least a slash
+    }
+
     return stringBuilder.toString();
   }
 }
