@@ -46,16 +46,14 @@ class PathNormalizer {
         if (stringBuilder.charAt(index + 1) == '.') {
           if (index < stringBuilder.length() - 2) {
             if (stringBuilder.charAt(index + 2) == '.') {
-              slashIndexStack.pop();
-              int endIndex = index + 3;
-              // backtrack so we can detect if this / is part of another replacement
-
-              if (slashIndexStack.empty()) { //if no previous slashes, then reset after deleting
-                index = 0;
-                stringBuilder.delete(0, endIndex); // "/../asdf" -> "/asdf"
-              } else { //otherwise, delete prev section with this section
-                index = slashIndexStack.pop() - 1;
-                stringBuilder.delete(index + 1, endIndex); // "/a/../b/" -> "/b/"
+              //If it looks like "/../" or ends with "/.."
+              if (index < stringBuilder.length() - 3 && stringBuilder.charAt(index + 3) == '/'
+                  || index == stringBuilder.length() - 3) {
+                slashIndexStack.pop();
+                int endIndex = index + 3;
+                // backtrack so we can detect if this / is part of another replacement
+                index = slashIndexStack.empty() ? -1 : slashIndexStack.pop() - 1;
+                stringBuilder.delete(index + 1, endIndex);
               }
             } else if (stringBuilder.charAt(index + 2) == '/') {
               slashIndexStack.pop();
