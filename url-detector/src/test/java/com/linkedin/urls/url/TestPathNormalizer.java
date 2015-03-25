@@ -36,8 +36,11 @@ public class TestPathNormalizer {
         {"/a/../b/c", "/b/c"},
         {"/blah/..", "/"},
         {"../", "../"},
-        {"/asdf/.", "/asdf/."}
-
+        {"/asdf/.", "/asdf/."},
+        {"/a/b/./././././../c/d", "/a/c/d"},
+        {"/a/b//////.///././././../c/d", "/a/c/d"},
+        {"//../a/c/..///sdf", "/a/sdf"},
+        {"/../asdf", "/asdf"}
     };
   }
 

@@ -49,14 +49,22 @@ class PathNormalizer {
               slashIndexStack.pop();
               int endIndex = index + 3;
               // backtrack so we can detect if this / is part of another replacement
-              index = slashIndexStack.empty() ? 0 : slashIndexStack.pop();
-              stringBuilder.delete(index, endIndex); // "/asdf/../" -> ""
+
+              if (slashIndexStack.empty()) { //if no previous slashes, then reset after deleting
+                index = 0;
+                stringBuilder.delete(0, endIndex); // "/../asdf" -> "/asdf"
+              } else { //otherwise, delete prev section with this section
+                index = slashIndexStack.pop() - 1;
+                stringBuilder.delete(index + 1, endIndex); // "/a/../b/" -> "/b/"
+              }
             } else if (stringBuilder.charAt(index + 2) == '/') {
+              slashIndexStack.pop();
               stringBuilder.delete(index, index + 2); // "/./" -> "/"
               index--; // backtrack so we can detect if this / is part of another replacement
             }
           }
         } else if (stringBuilder.charAt(index + 1) == '/') {
+          slashIndexStack.pop();
           stringBuilder.deleteCharAt(index);
           index--;
         }
