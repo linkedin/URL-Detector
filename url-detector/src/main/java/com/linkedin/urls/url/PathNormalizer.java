@@ -48,19 +48,21 @@ class PathNormalizer {
             //If it looks like "/../" or ends with "/.."
             if (index < stringBuilder.length() - 3 && stringBuilder.charAt(index + 3) == '/'
                 || index == stringBuilder.length() - 3) {
+              boolean endOfPath = index == stringBuilder.length() - 3;
               slashIndexStack.pop();
               int endIndex = index + 3;
               // backtrack so we can detect if this / is part of another replacement
               index = slashIndexStack.empty() ? -1 : slashIndexStack.pop() - 1;
-              stringBuilder.delete(index + 1, endIndex);
+              int startIndex = endOfPath ? index + 1 : index;
+              stringBuilder.delete(startIndex + 1, endIndex);
             }
-          } else if (index < stringBuilder.length() - 2 && stringBuilder.charAt(index + 2) == '/') {
+          } else if (index < stringBuilder.length() - 2 && stringBuilder.charAt(index + 2) == '/'
+              || index == stringBuilder.length() - 2) {
+            boolean endOfPath = index == stringBuilder.length() - 2;
             slashIndexStack.pop();
-            stringBuilder.delete(index, index + 2); // "/./" -> "/"
+            int startIndex = endOfPath ? index + 1 : index;
+            stringBuilder.delete(startIndex, index + 2); // "/./" -> "/"
             index--; // backtrack so we can detect if this / is part of another replacement
-          } else if (index == stringBuilder.length() - 2) { // "/a/." -> "/a/"
-            slashIndexStack.pop();
-            stringBuilder.delete(index + 1, index + 2);
           }
         } else if (stringBuilder.charAt(index + 1) == '/') {
           slashIndexStack.pop();
