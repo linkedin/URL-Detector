@@ -7,8 +7,9 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *
  */
-package com.linkedin.urls.url;
+package com.linkedin.urls;
 
+import com.linkedin.urls.HostNormalizer;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;

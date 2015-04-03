@@ -7,7 +7,7 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *
  */
-package com.linkedin.urls.url;
+package com.linkedin.urls;
 
 import java.util.Stack;
 import org.apache.commons.lang3.StringUtils;

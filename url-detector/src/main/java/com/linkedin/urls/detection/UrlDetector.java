@@ -9,9 +9,9 @@
  */
 package com.linkedin.urls.detection;
 
-import com.linkedin.urls.url.Url;
-import com.linkedin.urls.url.UrlMarker;
-import com.linkedin.urls.url.UrlPart;
+import com.linkedin.urls.Url;
+import com.linkedin.urls.UrlMarker;
+import com.linkedin.urls.UrlPart;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

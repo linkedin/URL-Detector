@@ -7,7 +7,7 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *
  */
-package com.linkedin.urls.url;
+package com.linkedin.urls;
 
 import java.net.MalformedURLException;
 
@@ -26,14 +26,7 @@ public class NormalizedUrl extends Url {
    * Returns a normalized url given a single url.
    */
   public static NormalizedUrl create(String url) throws MalformedURLException {
-    return normalize(Url.create(url));
-  }
-
-  /**
-   * Returns a normalized url given a url object
-   */
-  public static NormalizedUrl normalize(Url url) {
-    return new NormalizedUrl(new UrlMarker(url.getUrlMarker()));
+    return Url.create(url).normalize();
   }
 
   @Override

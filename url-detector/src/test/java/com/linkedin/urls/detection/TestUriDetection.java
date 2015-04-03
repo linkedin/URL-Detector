@@ -9,7 +9,7 @@
  */
 package com.linkedin.urls.detection;
 
-import com.linkedin.urls.url.Url;
+import com.linkedin.urls.Url;
 import java.util.List;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;

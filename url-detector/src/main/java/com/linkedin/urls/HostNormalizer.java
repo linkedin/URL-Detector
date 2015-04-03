@@ -7,10 +7,9 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *
  */
-package com.linkedin.urls.url;
+package com.linkedin.urls;
 
 import com.linkedin.urls.detection.CharUtils;
-import com.linkedin.urls.detection.InputTextReader;
 import java.net.IDN;
 import java.net.Inet6Address;
 import java.net.InetAddress;

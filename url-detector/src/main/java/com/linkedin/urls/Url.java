@@ -7,7 +7,7 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *
  */
-package com.linkedin.urls.url;
+package com.linkedin.urls;
 
 import com.linkedin.urls.detection.UrlDetector;
 import com.linkedin.urls.detection.UrlDetectorOptions;
@@ -72,6 +72,13 @@ public class Url {
     }
   }
 
+  /**
+   * Returns a normalized url given a url object
+   */
+  public NormalizedUrl normalize() {
+    return new NormalizedUrl(_urlMarker);
+  }
+
   @Override
   public String toString() {
     return this.getFullUrl();
@@ -91,15 +98,15 @@ public class Url {
    */
   public String getFullUrlWithoutFragment() {
     StringBuilder url = new StringBuilder();
-    if (getScheme() != null) {
+    if (!StringUtils.isEmpty(getScheme())) {
       url.append(getScheme());
       url.append(":");
     }
     url.append("//");
 
-    if (getUsername() != null) {
+    if (!StringUtils.isEmpty(getUsername())) {
       url.append(getUsername());
-      if (getPassword() != null) {
+      if (!StringUtils.isEmpty(getPassword())) {
         url.append(":");
         url.append(getPassword());
       }
@@ -113,7 +120,7 @@ public class Url {
     }
 
     url.append(getPath());
-    url.append(StringUtils.defaultString(getQuery()));
+    url.append(getQuery());
 
     return url.toString();
   }
@@ -127,21 +134,21 @@ public class Url {
         _scheme = DEFAULT_SCHEME;
       }
     }
-    return _scheme;
+    return StringUtils.defaultString(_scheme);
   }
 
   public String getUsername() {
     if (_username == null) {
       populateUsernamePassword();
     }
-    return _username;
+    return StringUtils.defaultString(_username);
   }
 
   public String getPassword() {
     if (_password == null) {
       populateUsernamePassword();
     }
-    return _password;
+    return StringUtils.defaultString(_password);
   }
 
   public String getHost() {
@@ -182,14 +189,14 @@ public class Url {
     if (_query == null) {
       _query = getPart(UrlPart.QUERY);
     }
-    return _query;
+    return StringUtils.defaultString(_query);
   }
 
   public String getFragment() {
     if (_fragment == null) {
       _fragment = getPart(UrlPart.FRAGMENT);
     }
-    return _fragment;
+    return StringUtils.defaultString(_fragment);
   }
 
   /**

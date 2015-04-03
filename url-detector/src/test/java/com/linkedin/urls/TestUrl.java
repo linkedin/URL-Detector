@@ -7,8 +7,9 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *
  */
-package com.linkedin.urls.url;
+package com.linkedin.urls;
 
+import com.linkedin.urls.Url;
 import java.net.MalformedURLException;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -19,13 +20,13 @@ public class TestUrl {
   @DataProvider
   private Object[][] getUsernamePasswordUrls() {
     return new Object[][] {
-        {"http://www.google.com/", "www.google.com", "/", null, null},
+        {"http://www.google.com/", "www.google.com", "/", "", ""},
         {"nooooo:password@teeee.com", "teeee.com", "/", "nooooo", "password"},
         {"hello:ono@bob.com/lala.html", "bob.com", "/lala.html", "hello", "ono"},
         {"lala:asdfjdj1k@bob.com", "bob.com", "/", "lala", "asdfjdj1k"},
-        {"sdf@bob.com", "bob.com", "/", "sdf", null},
-        {"@www.google.com", "www.google.com", "/", null, null},
-        {"lalal:@www.gogo.com", "www.gogo.com", "/", "lalal", null},
+        {"sdf@bob.com", "bob.com", "/", "sdf", ""},
+        {"@www.google.com", "www.google.com", "/", "", ""},
+        {"lalal:@www.gogo.com", "www.gogo.com", "/", "lalal", ""},
         {"nono:boo@[::1]", "[::1]", "/", "nono", "boo"},
         {"nono:boo@yahoo.com/@1234", "yahoo.com", "/@1234", "nono", "boo"}
     };
@@ -65,7 +66,7 @@ public class TestUrl {
   @DataProvider
   private Object[][] getQueryUrls() {
     return new Object[][] {
-        {"http://www.google.com/", "www.google.com", "/", null},
+        {"http://www.google.com/", "www.google.com", "/", ""},
         {"www.google.com/lala?here=2", "www.google.com", "/lala", "?here=2"},
         {"bewp.bop.com/boop?bip=2&bep=3", "bewp.bop.com", "/boop", "?bip=2&bep=3"},
         {"[fe80::1:192.168.12.3]/nooo?dop=2&wop=4", "[fe80::1:192.168.12.3]", "/nooo", "?dop=2&wop=4"},
