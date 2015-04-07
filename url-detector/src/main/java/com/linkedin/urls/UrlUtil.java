@@ -104,13 +104,15 @@ class UrlUtil {
       }
     }
 
-    if (stringBuilder.charAt(stringBuilder.length() - 1) == '.') {
-      stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+    if (stringBuilder.length() >= 1) {
+      if (stringBuilder.charAt(stringBuilder.length() - 1) == '.') {
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+      }
+      if (stringBuilder.charAt(0) == '.') {
+        stringBuilder.deleteCharAt(0);
+      }
     }
 
-    if (stringBuilder.charAt(0) == '.') {
-      stringBuilder.deleteCharAt(0);
-    }
     return stringBuilder.toString();
   }
 }

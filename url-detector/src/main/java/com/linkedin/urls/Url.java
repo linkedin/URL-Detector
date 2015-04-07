@@ -129,7 +129,10 @@ public class Url {
     if (_scheme == null) {
       if (exists(UrlPart.SCHEME)) {
         _scheme = getPart(UrlPart.SCHEME);
-        _scheme = _scheme.substring(0, _scheme.indexOf(":"));
+        int index = _scheme.indexOf(":");
+        if (index != -1) {
+          _scheme = _scheme.substring(0, index);
+        }
       } else if (!_originalUrl.startsWith("//")) {
         _scheme = DEFAULT_SCHEME;
       }
@@ -168,7 +171,11 @@ public class Url {
     if (_port == 0) {
       String portString = getPart(UrlPart.PORT);
       if (portString != null && !portString.isEmpty()) {
-        _port = Integer.parseInt(portString);
+        try {
+          _port = Integer.parseInt(portString);
+        } catch (NumberFormatException e) {
+          _port = -1;
+        }
       } else if (SCHEME_PORT_MAP.containsKey(getScheme())) {
         _port = SCHEME_PORT_MAP.get(getScheme());
       } else {

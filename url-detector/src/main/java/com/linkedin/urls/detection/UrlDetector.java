@@ -621,10 +621,10 @@ public class UrlDetector {
         _buffer.append(curr);
         return readFragment();
       } else if (checkMatchingCharacter(curr) == CharacterMatch.CharacterMatchStop || !CharUtils.isNumeric(curr)) {
-        //if we got here, then what we got so far is a valid url. dont append the current character.
+        //if we got here, then what we got so far is a valid url. don't append the current character.
         _reader.goBack();
 
-        //no port found it was something like google.com:hello.world
+        //no port found; it was something like google.com:hello.world
         if (portLen == 1) {
           //remove the ":" from the end.
           _buffer.delete(_buffer.length() - 1, _buffer.length());

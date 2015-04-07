@@ -10,6 +10,7 @@
 package com.linkedin.urls.detection;
 
 import java.util.ArrayList;
+import org.apache.commons.lang3.StringUtils;
 
 public class CharUtils {
 
@@ -70,6 +71,9 @@ public class CharUtils {
   public static String[] splitByDot(String input) {
     ArrayList<String> splitList = new ArrayList<String>();
     StringBuilder section = new StringBuilder();
+    if (StringUtils.isEmpty(input)) {
+      return new String[] {""};
+    }
     InputTextReader reader = new InputTextReader(input);
     while (!reader.eof()) {
       char curr = reader.read();

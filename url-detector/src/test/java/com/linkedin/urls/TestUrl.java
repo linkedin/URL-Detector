@@ -9,7 +9,6 @@
  */
 package com.linkedin.urls;
 
-import com.linkedin.urls.Url;
 import java.net.MalformedURLException;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -81,6 +80,26 @@ public class TestUrl {
     Assert.assertEquals(url.getHost(), host);
     Assert.assertEquals(url.getPath(), path);
     Assert.assertEquals(url.getQuery(), query);
+  }
+
+  @DataProvider
+  private Object[][] getSchemeUrls() {
+    return new Object[][] {
+        {"http://www.google.com/", "http", "www.google.com", "/"},
+        {"//www.google.com/", "", "www.google.com", "/"},
+        {"//123825342/", "", "123825342", "/"},
+        {"//hello/", "", "hello", "/"},
+        {"//hello:/", "", "hello", "/"}
+    };
+  }
+
+  @Test(dataProvider = "getSchemeUrls")
+  public void testScheme(String testInput, String scheme, String host, String path)
+      throws MalformedURLException {
+    Url url = Url.create(testInput);
+    Assert.assertEquals(url.getScheme(), scheme);
+    Assert.assertEquals(url.getHost(), host);
+    Assert.assertEquals(url.getPath(), path);
   }
 
   @DataProvider

@@ -76,7 +76,7 @@ public class HostNormalizer {
       }
     }
 
-    if (host == null) {
+    if (StringUtils.isEmpty(host)) {
       return;
     }
 
