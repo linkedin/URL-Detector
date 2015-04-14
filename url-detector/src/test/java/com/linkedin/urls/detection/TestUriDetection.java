@@ -634,6 +634,11 @@ public class TestUriDetection {
     runTest(validUrl, UrlDetectorOptions.Default, validUrl);
   }
 
+  @Test
+  public void testBacktrackInvalidUsernamePassword() {
+    runTest("http://hello:asdf.com", UrlDetectorOptions.Default, "asdf.com");
+  }
+
 
   private void runTest(String text, UrlDetectorOptions options, String... expected) {
     //do the detection

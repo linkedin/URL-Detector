@@ -286,9 +286,8 @@ public class UrlDetector {
           //go back to length location and restart search
           _reader.seek(backtrackOnFail);
           readEnd(ReadEndState.InvalidUrl);
-        } else {
-          length = 0;
         }
+        length = 0;
       }
     } else if (readScheme() && _buffer.length() > 0) {
         _hasScheme = true;
@@ -300,6 +299,7 @@ public class UrlDetector {
       readDomainName(_buffer.toString());
     } else {
       readEnd(ReadEndState.InvalidUrl);
+      length = 0;
     }
 
     return length;
