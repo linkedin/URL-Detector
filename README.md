@@ -36,8 +36,13 @@ For example, the following code will find the url `linkedin.com`
 ```java
 
     UrlDetector parser = new UrlDetector("hello this is a url Linkedin.com", UrlDetectorOptions.Default);
-    List<String> found = parser.detect();
+    List<Url> found = parser.detect();
 
+    for(Url url : found) {
+        System.out.println("Scheme: " + url.getScheme());
+        System.out.println("Host: " + url.getHost());
+        System.out.println("Path: " + url.getPath());
+    }
 ```
 
 ### Quote Matching and HTML
@@ -55,7 +60,7 @@ In code this looks like:
 ```java
 
     UrlDetector parser = new UrlDetector("<a href="linkedin.com/abc">linkedin.com</a>", UrlDetectorOptions.HTML);
-    List<String> found = parser.detect();
+    List<Url> found = parser.detect();
 
 ```
 
@@ -65,9 +70,9 @@ In code this looks like:
 
 This library was written by the security team and Linkedin when other options did not exist. Some of the primary authors are:
 
-* Vlad Shlosberg (vshlos)
-* Tzu-Han Jan (tjan)
-* Yulia Astakhova (jastakho)
+* Vlad Shlosberg (vshlosbe@linkedin.com)
+* Tzu-Han Jan (tjan@linkedin.com)
+* Yulia Astakhova (jastakho@linkedin.com)
 
 ---
 ## Third Party Dependencies
