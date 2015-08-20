@@ -16,6 +16,7 @@ import java.net.MalformedURLException;
  */
 public class NormalizedUrl extends Url {
 
+  private boolean _isPopulated = false;
   private byte[] _hostBytes;
 
   public NormalizedUrl(UrlMarker urlMarker) {
@@ -47,7 +48,6 @@ public class NormalizedUrl extends Url {
 
   /**
    * Returns the byte representation of the ip address. If the host is not an ip address, it returns null.
-   * @return
    */
   @Override
   public byte[] getHostBytes() {
@@ -58,8 +58,11 @@ public class NormalizedUrl extends Url {
   }
 
   private void populateHostAndHostBytes() {
-    HostNormalizer hostNormalizer = new HostNormalizer(super.getHost());
-    setRawHost(hostNormalizer.getNormalizedHost());
-    _hostBytes = hostNormalizer.getBytes();
+    if (!_isPopulated) {
+      HostNormalizer hostNormalizer = new HostNormalizer(super.getHost());
+      setRawHost(hostNormalizer.getNormalizedHost());
+      _hostBytes = hostNormalizer.getBytes();
+      _isPopulated = true;
+    }
   }
 }
