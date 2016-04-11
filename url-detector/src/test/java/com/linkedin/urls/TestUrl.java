@@ -14,6 +14,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+
 public class TestUrl {
 
   @DataProvider
@@ -54,8 +55,7 @@ public class TestUrl {
   }
 
   @Test(dataProvider = "getPortUrls")
-  public void testPort(String testInput, String host, String path, int port)
-      throws MalformedURLException {
+  public void testPort(String testInput, String host, String path, int port) throws MalformedURLException {
     Url url = Url.create(testInput);
     Assert.assertEquals(url.getHost(), host);
     Assert.assertEquals(url.getPath(), path);
@@ -74,8 +74,7 @@ public class TestUrl {
   }
 
   @Test(dataProvider = "getQueryUrls")
-  public void testQuery(String testInput, String host, String path, String query)
-      throws MalformedURLException {
+  public void testQuery(String testInput, String host, String path, String query) throws MalformedURLException {
     Url url = Url.create(testInput);
     Assert.assertEquals(url.getHost(), host);
     Assert.assertEquals(url.getPath(), path);
@@ -94,8 +93,7 @@ public class TestUrl {
   }
 
   @Test(dataProvider = "getSchemeUrls")
-  public void testScheme(String testInput, String scheme, String host, String path)
-      throws MalformedURLException {
+  public void testScheme(String testInput, String scheme, String host, String path) throws MalformedURLException {
     Url url = Url.create(testInput);
     Assert.assertEquals(url.getScheme(), scheme);
     Assert.assertEquals(url.getHost(), host);
@@ -123,13 +121,13 @@ public class TestUrl {
   }
 
   @Test(dataProvider = "getUrlsAndHosts")
-  public void testHostAndFullUrl(String testInput, String host, String fullUrl)
-      throws MalformedURLException {
+  public void testHostAndFullUrl(String testInput, String host, String fullUrl) throws MalformedURLException {
     Url url = Url.create(testInput);
     Assert.assertEquals(url.getHost(), host, testInput);
     Assert.assertEquals(url.getFullUrl(), fullUrl);
     int fragmentIndex = fullUrl.indexOf("#");
-    Assert.assertEquals(url.getFullUrlWithoutFragment(), fragmentIndex == -1 ? fullUrl : fullUrl.substring(0, fragmentIndex));
+    Assert.assertEquals(url.getFullUrlWithoutFragment(),
+        fragmentIndex == -1 ? fullUrl : fullUrl.substring(0, fragmentIndex));
   }
 
   @DataProvider
@@ -141,7 +139,8 @@ public class TestUrl {
   }
 
   @Test(dataProvider = "getSingleDomainUrls")
-  public void testSingleDomainUrls(String testInput, String host, int port, String fullUrl) throws MalformedURLException {
+  public void testSingleDomainUrls(String testInput, String host, int port, String fullUrl)
+      throws MalformedURLException {
     Url url = Url.create(testInput);
     Assert.assertEquals(url.getHost(), host);
     Assert.assertEquals(url.getPort(), port);

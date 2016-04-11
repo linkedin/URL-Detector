@@ -12,6 +12,7 @@ package com.linkedin.urls;
 import java.util.Stack;
 import org.apache.commons.lang3.StringUtils;
 
+
 class PathNormalizer {
 
   /**

@@ -9,11 +9,10 @@
  */
 package com.linkedin.urls;
 
-import com.linkedin.urls.Url;
-import com.linkedin.urls.UrlMarker;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 
 @Test
 public class TestUrlMarker {

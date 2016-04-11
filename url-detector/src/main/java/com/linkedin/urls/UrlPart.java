@@ -31,4 +31,3 @@ public enum UrlPart {
     return _nextPart;
   }
 }
-

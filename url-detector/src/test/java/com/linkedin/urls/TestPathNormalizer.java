@@ -9,10 +9,10 @@
  */
 package com.linkedin.urls;
 
-import com.linkedin.urls.PathNormalizer;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 
 public class TestPathNormalizer {
 

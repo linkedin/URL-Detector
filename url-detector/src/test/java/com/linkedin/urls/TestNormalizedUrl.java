@@ -9,12 +9,11 @@
  */
 package com.linkedin.urls;
 
-import com.linkedin.urls.NormalizedUrl;
-import com.linkedin.urls.Url;
 import java.net.MalformedURLException;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 
 public class TestNormalizedUrl {
 
@@ -34,14 +33,12 @@ public class TestNormalizedUrl {
   }
 
   @Test(dataProvider = "getHostPathUrls")
-  public void testUsernamePasswordUrls(String testString, String host, String path)
-      throws MalformedURLException {
+  public void testUsernamePasswordUrls(String testString, String host, String path) throws MalformedURLException {
     Url url = NormalizedUrl.create(testString);
     Assert.assertNotNull(url);
     Assert.assertEquals(url.getHost(), host);
     Assert.assertEquals(url.getPath(), path);
   }
-
 
   /**
    * https://developers.google.com/safe-browsing/developers_guide_v3#Canonicalization

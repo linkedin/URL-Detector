@@ -30,8 +30,8 @@ public class UrlDetector {
   /**
    * Valid protocol schemes.
    */
-  private static final Set<String> VALID_SCHEMES = Collections.unmodifiableSet(new HashSet<String>(
-      Arrays.asList("http://", "https://", "ftp://", "ftps://", "http%3a//", "https%3a//", "ftp%3a//", "ftps%3a//")));
+  private static final Set<String> VALID_SCHEMES = Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(
+      "http://", "https://", "ftp://", "ftps://", "http%3a//", "https%3a//", "ftp%3a//", "ftps%3a//")));
 
   /**
    * The response of character matching.
@@ -261,6 +261,7 @@ public class UrlDetector {
           } else {
             _buffer.append(curr);
           }
+          break;
       }
     }
     if (_options.hasFlag(UrlDetectorOptions.ALLOW_SINGLE_LEVEL_DOMAIN) && _buffer.length() > 0 && _hasScheme) {
@@ -290,8 +291,8 @@ public class UrlDetector {
         length = 0;
       }
     } else if (readScheme() && _buffer.length() > 0) {
-        _hasScheme = true;
-        length = _buffer.length(); //set length to be right after the scheme
+      _hasScheme = true;
+      length = _buffer.length(); //set length to be right after the scheme
     } else if (_buffer.length() > 0 && _options.hasFlag(UrlDetectorOptions.ALLOW_SINGLE_LEVEL_DOMAIN)
         && _reader.canReadChars(1)) { //takes care of case like hi:
       _reader.goBack(); //unread the ":" so readDomainName can take care of the port
@@ -324,8 +325,8 @@ public class UrlDetector {
   private CharacterMatch checkMatchingCharacter(char curr) {
 
     //This is a quote and we are matching quotes.
-    if ((curr == '\"' && _options.hasFlag(UrlDetectorOptions.QUOTE_MATCH)) || (curr == '\'' && _options
-        .hasFlag(UrlDetectorOptions.SINGLE_QUOTE_MATCH))) {
+    if ((curr == '\"' && _options.hasFlag(UrlDetectorOptions.QUOTE_MATCH))
+        || (curr == '\'' && _options.hasFlag(UrlDetectorOptions.SINGLE_QUOTE_MATCH))) {
       boolean quoteStart;
       if (curr == '\"') {
         quoteStart = _quoteStart;
@@ -353,8 +354,8 @@ public class UrlDetector {
       //If its html, look for "<"
       _characterMatch.put(curr, getCharacterCount(curr) + 1);
       return CharacterMatch.CharacterMatchStart;
-    } else if ((_options.hasFlag(UrlDetectorOptions.BRACKET_MATCH) && (curr == ']' || curr == '}' || curr == ')')) || (
-        _options.hasFlag(UrlDetectorOptions.XML) && (curr == '>'))) {
+    } else if ((_options.hasFlag(UrlDetectorOptions.BRACKET_MATCH) && (curr == ']' || curr == '}' || curr == ')'))
+        || (_options.hasFlag(UrlDetectorOptions.XML) && (curr == '>'))) {
 
       //If we catch a end bracket increment its count and get rid of not ipv6 flag
       Integer currVal = getCharacterCount(curr) + 1;
@@ -374,6 +375,8 @@ public class UrlDetector {
           break;
         case '>':
           match = '<';
+          break;
+        default:
           break;
       }
 
@@ -523,12 +526,13 @@ public class UrlDetector {
     _currentUrlMarker.setIndex(UrlPart.HOST, hostIndex);
     //create the domain name reader and specify the handler that will be called when a quote character
     //or something is found.
-    DomainNameReader reader = new DomainNameReader(_reader, _buffer, current, _options, new DomainNameReader.CharacterHandler() {
-      @Override
-      public void addCharacter(char character) {
-        checkMatchingCharacter(character);
-      }
-    });
+    DomainNameReader reader =
+        new DomainNameReader(_reader, _buffer, current, _options, new DomainNameReader.CharacterHandler() {
+          @Override
+          public void addCharacter(char character) {
+            checkMatchingCharacter(character);
+          }
+        });
 
     //Try to read the dns and act on the response.
     DomainNameReader.ReaderNextState state = reader.readDomainName();

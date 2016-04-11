@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
+
 /**
  * Creating own Uri class since java.net.Uri would throw parsing exceptions
  * for URL's considered ok by browsers.
@@ -59,8 +60,7 @@ public class Url {
   /**
    * Returns a url given a single url.
    */
-  public static Url create(String url)
-      throws MalformedURLException {
+  public static Url create(String url) throws MalformedURLException {
     String formattedString = UrlUtil.removeSpecialSpaces(url.trim().replace(" ", "%20"));
     List<Url> urls = new UrlDetector(formattedString, UrlDetectorOptions.ALLOW_SINGLE_LEVEL_DOMAIN).detect();
     if (urls.size() == 1) {

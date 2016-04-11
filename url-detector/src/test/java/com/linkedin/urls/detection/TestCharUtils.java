@@ -13,16 +13,17 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+
 public class TestCharUtils {
 
   @Test
   public void testCharUtilsIsHex() {
-    char[] arr = {'a', 'A', '0', '9'};
+    char[] arr = { 'a', 'A', '0', '9' };
     for (char a : arr) {
       Assert.assertTrue(CharUtils.isHex(a));
     }
 
-    char[] arr2 = {'~', ';', 'Z', 'g'};
+    char[] arr2 = { '~', ';', 'Z', 'g' };
     for (char a : arr2) {
       Assert.assertFalse(CharUtils.isHex(a));
     }
@@ -30,12 +31,12 @@ public class TestCharUtils {
 
   @Test
   public void testCharUtilsIsNumeric() {
-    char[] arr = {'0', '4', '6', '9'};
+    char[] arr = { '0', '4', '6', '9' };
     for (char a : arr) {
       Assert.assertTrue(CharUtils.isNumeric(a));
     }
 
-    char[] arr2 = {'a', '~', 'A', 0};
+    char[] arr2 = { 'a', '~', 'A', 0 };
     for (char a : arr2) {
       Assert.assertFalse(CharUtils.isNumeric(a));
     }
@@ -43,12 +44,12 @@ public class TestCharUtils {
 
   @Test
   public void testCharUtilsIsAlpha() {
-    char[] arr = {'a', 'Z', 'f', 'X'};
+    char[] arr = { 'a', 'Z', 'f', 'X' };
     for (char a : arr) {
       Assert.assertTrue(CharUtils.isAlpha(a));
     }
 
-    char[] arr2 = {'0', '9', '[', '~'};
+    char[] arr2 = { '0', '9', '[', '~' };
     for (char a : arr2) {
       Assert.assertFalse(CharUtils.isAlpha(a));
     }
@@ -56,12 +57,12 @@ public class TestCharUtils {
 
   @Test
   public void testCharUtilsIsAlphaNumeric() {
-    char[] arr = {'a', 'G', '3', '9'};
+    char[] arr = { 'a', 'G', '3', '9' };
     for (char a : arr) {
       Assert.assertTrue(CharUtils.isAlphaNumeric(a));
     }
 
-    char[] arr2 = {'~', '-', '_', '\n'};
+    char[] arr2 = { '~', '-', '_', '\n' };
     for (char a : arr2) {
       Assert.assertFalse(CharUtils.isAlphaNumeric(a));
     }
@@ -69,12 +70,12 @@ public class TestCharUtils {
 
   @Test
   public void testCharUtilsIsUnreserved() {
-    char[] arr = {'-', '.', 'a', '9', 'Z', '_', 'f'};
+    char[] arr = { '-', '.', 'a', '9', 'Z', '_', 'f' };
     for (char a : arr) {
       Assert.assertTrue(CharUtils.isUnreserved(a));
     }
 
-    char[] arr2 = {' ', '!', '(', '\n'};
+    char[] arr2 = { ' ', '!', '(', '\n' };
     for (char a : arr2) {
       Assert.assertFalse(CharUtils.isUnreserved(a));
     }
@@ -99,7 +100,8 @@ public class TestCharUtils {
 
   @Test(dataProvider = "getSplitStrings")
   public void testSplitByDot(String stringToSplit) {
-    Assert.assertEquals(CharUtils.splitByDot(stringToSplit), stringToSplit.split("[\\.\u3002\uFF0E\uFF61]|%2e|%2E", -1));
+    Assert
+        .assertEquals(CharUtils.splitByDot(stringToSplit), stringToSplit.split("[\\.\u3002\uFF0E\uFF61]|%2e|%2E", -1));
   }
 
 }

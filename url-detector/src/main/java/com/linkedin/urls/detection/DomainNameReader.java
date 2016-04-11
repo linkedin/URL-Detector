@@ -31,13 +31,13 @@ public class DomainNameReader {
    * The maximum number that the url can be in a url that looks like:
    * http://123123123123/path
    */
-  private static final long MAX_NUMERIC_DOMAIN_VALUE = 4294967295l;
+  private static final long MAX_NUMERIC_DOMAIN_VALUE = 4294967295L;
 
   /**
    * The minimum number the url can be in a url that looks like:
    * http://123123123123/path
    */
-  private static final long MIN_NUMERIC_DOMAIN_VALUE = 16843008l;
+  private static final long MIN_NUMERIC_DOMAIN_VALUE = 16843008L;
 
   /**
    * If the domain name is an ip address, for each part of the address, whats the minimum value?
@@ -206,7 +206,7 @@ public class DomainNameReader {
     if (_current != null) {
       //Handles the case where the string is ".hello"
       if (_current.length() == 1 && CharUtils.isDot(_current.charAt(0))) {
-          return ReaderNextState.InvalidDomainName;
+        return ReaderNextState.InvalidDomainName;
       } else if (_current.length() == 3 && _current.equalsIgnoreCase("%" + HEX_ENCODED_DOT)) {
         return ReaderNextState.InvalidDomainName;
       }
@@ -229,7 +229,7 @@ public class DomainNameReader {
       int index = isAllHexSoFar ? 2 : 0;
       boolean done = false;
 
-      while(index < length && !done) {
+      while (index < length && !done) {
         //get the current character and update length counts.
         char curr = currArray[index];
         _currentLabelLength++;
@@ -245,9 +245,8 @@ public class DomainNameReader {
         } else if (curr == '[') {
           _seenBracket = true;
           _numeric = false;
-        } else if (curr == '%' && index + 2 < length &&
-            CharUtils.isHex(currArray[index + 1]) &&
-            CharUtils.isHex(currArray[index + 2])) {
+        } else if (curr == '%' && index + 2 < length && CharUtils.isHex(currArray[index + 1])
+            && CharUtils.isHex(currArray[index + 2])) {
           //handle url encoded dot
           if (currArray[index + 1] == '2' && currArray[index + 2] == 'e') {
             _dots++;
@@ -333,8 +332,8 @@ public class DomainNameReader {
       } else if (curr == '#') {
         //continue by reading the fragment
         return checkDomainNameValid(ReaderNextState.ReadFragment, curr);
-      } else if (CharUtils.isDot(curr) ||
-          (curr == '%' && _reader.canReadChars(2) && _reader.peek(2).equalsIgnoreCase(HEX_ENCODED_DOT))) {
+      } else if (CharUtils.isDot(curr)
+          || (curr == '%' && _reader.canReadChars(2) && _reader.peek(2).equalsIgnoreCase(HEX_ENCODED_DOT))) {
         //if the current character is a dot or a urlEncodedDot
 
         //handles the case: hello..
@@ -381,6 +380,7 @@ public class DomainNameReader {
             break;
           default:
             _currentLabelLength++;
+            break;
         }
         _numeric = false;
         _buffer.append(curr);
@@ -408,9 +408,8 @@ public class DomainNameReader {
       } else if (curr == '[' && _seenCompleteBracketSet) { //Case where [::][ ...
         _reader.goBack();
         done = true;
-      } else if (curr == '%' &&
-          _reader.canReadChars(2) && CharUtils.isHex(_reader.peekChar(0)) &&
-          CharUtils.isHex(_reader.peekChar(1))) {
+      } else if (curr == '%' && _reader.canReadChars(2) && CharUtils.isHex(_reader.peekChar(0))
+          && CharUtils.isHex(_reader.peekChar(1))) {
         //append to the states.
         _buffer.append(curr);
         _buffer.append(_reader.read());
@@ -469,13 +468,11 @@ public class DomainNameReader {
       topStart = Math.max(topStart, 0);
 
       //get the first 4 characters of the top level domain
-      String topLevelStart =
-          _buffer.substring(topStart, topStart + Math.min(4, _buffer.length() - topStart));
-
+      String topLevelStart = _buffer.substring(topStart, topStart + Math.min(4, _buffer.length() - topStart));
 
       //There is no size restriction if the top level domain is international (starts with "xn--")
-      valid = ((topLevelStart.equalsIgnoreCase("xn--") || (_topLevelLength >= MIN_TOP_LEVEL_DOMAIN
-          && _topLevelLength <= MAX_TOP_LEVEL_DOMAIN)));
+      valid =
+          ((topLevelStart.equalsIgnoreCase("xn--") || (_topLevelLength >= MIN_TOP_LEVEL_DOMAIN && _topLevelLength <= MAX_TOP_LEVEL_DOMAIN)));
     }
 
     if (valid) {
@@ -570,10 +567,8 @@ public class DomainNameReader {
     // Return false if we don't see [....]
     // or if we only have '[]'
     // or if we detect [:8000: ...]; only [::8000: ...] is okay
-    if (domainArray.length < 3 ||
-        domainArray[domainArray.length - 1] != ']' ||
-        domainArray[0] != '[' ||
-        domainArray[1] == ':' && domainArray[2] != ':') {
+    if (domainArray.length < 3 || domainArray[domainArray.length - 1] != ']' || domainArray[0] != '['
+        || domainArray[1] == ':' && domainArray[2] != ':') {
       return false;
     }
 
@@ -591,7 +586,8 @@ public class DomainNameReader {
     //If doubleColonFlag is true, that means we've already seen one "::"; we're not allowed to have more than one.
     boolean doubleColonFlag = false;
 
-    for (int index = 0; index < domainArray.length; index++) {
+    int index = 0;
+    for (; index < domainArray.length; index++) {
       switch (domainArray[index]) {
         case '[': //found beginning of ipv6 address
           break;
@@ -646,6 +642,7 @@ public class DomainNameReader {
               hexSection = false; //non hex digit.
             }
           }
+          break;
       }
       if (hexDigits > 4 || numSections > 8) {
         return false;

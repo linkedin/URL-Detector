@@ -11,6 +11,7 @@ package com.linkedin.urls;
 
 import java.net.MalformedURLException;
 
+
 /**
  * Returns a normalized version of a url instead of the original url string.
  */

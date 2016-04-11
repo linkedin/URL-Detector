@@ -9,7 +9,6 @@
  */
 package com.linkedin.urls;
 
-import com.linkedin.urls.HostNormalizer;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -17,6 +16,7 @@ import java.util.Arrays;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 
 public class TestHostNormalizer {
 
@@ -41,8 +41,7 @@ public class TestHostNormalizer {
   }
 
   @Test(dataProvider = "getIPAddresses")
-  public void testIpHostNormalizationAndGetBytes(String original, String expectedHost)
-      throws UnknownHostException {
+  public void testIpHostNormalizationAndGetBytes(String original, String expectedHost) throws UnknownHostException {
     HostNormalizer hostNormalizer = new HostNormalizer(original);
     Assert.assertEquals(hostNormalizer.getNormalizedHost(), expectedHost);
 

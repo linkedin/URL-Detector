@@ -23,7 +23,7 @@ public enum UrlDetectorOptions {
    * If a string starts with a quote, then the ending quote will be eliminated. For example,
    * "http://linkedin.com" will pull out just 'http://linkedin.com' instead of 'http://linkedin.com"'
    */
-  QUOTE_MATCH(1),   // 00000001
+  QUOTE_MATCH(1), // 00000001
 
   /**
    * Matches single quotes in the beginning and end of a string.
@@ -34,7 +34,7 @@ public enum UrlDetectorOptions {
    * Matches brackets and closes on the second one.
    * Same as quote matching but works for brackets such as (), {}, [].
    */
-  BRACKET_MATCH(4),  // 000000100
+  BRACKET_MATCH(4), // 000000100
 
   /**
    * Checks for bracket characters and more importantly quotes to start and end strings.
@@ -55,7 +55,7 @@ public enum UrlDetectorOptions {
   /**
    * Checks all of the rules besides brackets. This is XML but also can contain javascript.
    */
-  HTML(27),  //00011011
+  HTML(27), //00011011
 
   /**
    * Checks for single level domains as well. Ex: go/, http://localhost

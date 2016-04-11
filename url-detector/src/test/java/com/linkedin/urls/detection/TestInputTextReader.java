@@ -12,6 +12,7 @@ package com.linkedin.urls.detection;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+
 public class TestInputTextReader {
   private static final String CONTENT = "HELLO WORLD";
 

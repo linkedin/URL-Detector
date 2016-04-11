@@ -13,6 +13,7 @@ import com.linkedin.urls.detection.CharUtils;
 import com.linkedin.urls.detection.InputTextReader;
 import java.util.Stack;
 
+
 class UrlUtil {
 
   /**
@@ -34,8 +35,8 @@ class UrlUtil {
 
           if (decodedChar == '%') {
             i--; //backtrack one character to check for another decoding with this %.
-          } else if (!nonDecodedPercentIndices.isEmpty() && CharUtils.isHex(decodedChar) && CharUtils
-              .isHex(stringBuilder.charAt(i - 1)) && i - nonDecodedPercentIndices.peek() == 2) {
+          } else if (!nonDecodedPercentIndices.isEmpty() && CharUtils.isHex(decodedChar)
+              && CharUtils.isHex(stringBuilder.charAt(i - 1)) && i - nonDecodedPercentIndices.peek() == 2) {
             //Go back to the last non-decoded percent sign if it's decodable.
             //We only need to go back if it's of form %[HEX][HEX]
             i = nonDecodedPercentIndices.pop() - 1; //backtrack to the % sign.
@@ -90,7 +91,7 @@ class UrlUtil {
   protected static String removeExtraDots(String host) {
     StringBuilder stringBuilder = new StringBuilder();
     InputTextReader reader = new InputTextReader(host);
-    while(!reader.eof()) {
+    while (!reader.eof()) {
       char curr = reader.read();
       stringBuilder.append(curr);
       if (curr == '.') {
@@ -113,4 +114,6 @@ class UrlUtil {
 
     return stringBuilder.toString();
   }
+
+  private UrlUtil() { }
 }

@@ -19,12 +19,13 @@ import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
+
 /**
  * Normalizes the host by converting hex characters to the actual textual representation, changes ip addresses
  * to a formal format. Then re-encodes the final host name.
  */
 public class HostNormalizer {
-  private static final long MAX_NUMERIC_DOMAIN_VALUE = 4294967295l;
+  private static final long MAX_NUMERIC_DOMAIN_VALUE = 4294967295L;
   private static final int MAX_IPV4_PART = 255;
   private static final int MIN_IP_PART = 0;
   private static final int MAX_IPV6_PART = 0xFFFF;
@@ -118,16 +119,15 @@ public class HostNormalizer {
     byte[] bytes = new byte[16];
 
     //An ipv4 mapped ipv6 bytes will have the 11th and 12th byte as 0xff
-    bytes[10] = bytes[11] = (byte) 0xff;
+    bytes[10] = (byte) 0xff;
+    bytes[11] = (byte) 0xff;
     for (int i = 0; i < parts.length; i++) {
       String parsedNum;
       int base;
-      if (parts[i].startsWith("0x")) //hex
-      {
+      if (parts[i].startsWith("0x")) { //hex
         parsedNum = parts[i].substring(2);
         base = 16;
-      } else if (parts[i].startsWith("0")) //octal
-      {
+      } else if (parts[i].startsWith("0")) { //octal
         parsedNum = parts[i].substring(1);
         base = 8;
       } else { //decimal
@@ -142,7 +142,7 @@ public class HostNormalizer {
         return null;
       }
 
-      if (numParts == 4 && section > MAX_IPV4_PART ||    //This would look like 288.1.2.4
+      if (numParts == 4 && section > MAX_IPV4_PART || //This would look like 288.1.2.4
           numParts == 1 && section > MAX_NUMERIC_DOMAIN_VALUE || //This would look like 4294967299
           section < MIN_IP_PART) {
         return null;
@@ -150,7 +150,7 @@ public class HostNormalizer {
       //bytes 13->16 is where the ipv4 address of an ipv4-mapped-ipv6-address is stored.
       if (numParts == 4) {
         bytes[IPV4_MAPPED_IPV6_START_OFFSET + i] = section.byteValue();
-      } else {//numParts == 1
+      } else { //numParts == 1
         int index = IPV4_MAPPED_IPV6_START_OFFSET;
         bytes[index++] = (byte) ((section >> 24) & 0xFF);
         bytes[index++] = (byte) ((section >> 16) & 0xFF);
@@ -243,4 +243,3 @@ public class HostNormalizer {
     return _normalizedHost;
   }
 }
-

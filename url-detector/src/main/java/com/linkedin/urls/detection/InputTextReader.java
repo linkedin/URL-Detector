@@ -141,8 +141,8 @@ public class InputTextReader {
       }
 
       String badText = new String(_content, start, backtrackLength);
-      throw new NegativeArraySizeException(
-          "Backtracked max amount of characters. Endless loop detected. Bad Text: '" + badText + "'");
+      throw new NegativeArraySizeException("Backtracked max amount of characters. Endless loop detected. Bad Text: '"
+          + badText + "'");
     }
   }
 }

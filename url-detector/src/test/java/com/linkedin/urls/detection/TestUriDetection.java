@@ -15,6 +15,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+
 public class TestUriDetection {
 
   @Test
@@ -47,11 +48,10 @@ public class TestUriDetection {
   @Test
   public void testInternationalUrls() {
     runTest("this is an international domain: http://\u043F\u0440\u0438\u043c\u0435\u0440.\u0438\u0441\u043f\u044b"
-            + "\u0442\u0430\u043d\u0438\u0435 so is this: \u4e94\u7926\u767c\u5c55.\u4e2d\u570b.",
+        + "\u0442\u0430\u043d\u0438\u0435 so is this: \u4e94\u7926\u767c\u5c55.\u4e2d\u570b.",
         UrlDetectorOptions.Default,
         "http://\u043F\u0440\u0438\u043c\u0435\u0440.\u0438\u0441\u043f\u044b\u0442\u0430\u043d\u0438\u0435",
-        "\u4e94\u7926\u767c\u5c55.\u4e2d\u570b."
-    );
+        "\u4e94\u7926\u767c\u5c55.\u4e2d\u570b.");
   }
 
   @Test
@@ -129,16 +129,12 @@ public class TestUriDetection {
     //Really long addresses testing rules about total length of domain name and number of labels in a domain and size of each label.
     runTest(
         "This will work: 1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.a.b.c.d.e.ly "
-            +
-            "This will not work:  1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.a.b.c.d.e.f.ly "
-            +
-            "This should as well: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc.dddddddddddddddddddddddddddddddddddddddddddddddddddddd.bit.ly "
-            +
-            "But this wont: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc.dddddddddddddddddddddddddddddddddddddddddddddddddddddd.bit.ly.dbl.spamhaus.org",
+            + "This will not work:  1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.a.b.c.d.e.f.ly "
+            + "This should as well: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc.dddddddddddddddddddddddddddddddddddddddddddddddddddddd.bit.ly "
+            + "But this wont: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc.dddddddddddddddddddddddddddddddddddddddddddddddddddddd.bit.ly.dbl.spamhaus.org",
         UrlDetectorOptions.Default,
         "1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.1.2.3.4.5.6.7.8.9.0.a.b.c.d.e.ly",
-        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc.dddddddddddddddddddddddddddddddddddddddddddddddddddddd.bit.ly"
-    );
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc.dddddddddddddddddddddddddddddddddddddddddddddddddddddd.bit.ly");
   }
 
   @Test
@@ -168,7 +164,7 @@ public class TestUriDetection {
   @Test
   public void testIncorrectParsingHtmlWithBadOptions() {
     runTest("<a href=\"http://www.google.com/\">google.com</a>", UrlDetectorOptions.Default,
-        //Doesn't have the http since it was read as "http:// and goes to the end.
+    //Doesn't have the http since it was read as "http:// and goes to the end.
         "www.google.com/\">google.com</a>");
   }
 
@@ -217,7 +213,6 @@ public class TestUriDetection {
   public void testNonStandardDotsBacktracking() {
     runTest("\u9053 \u83dc\u3002\u3002\u3002\u3002", UrlDetectorOptions.Default);
   }
-
 
   @Test
   public void testBacktrackingStrangeFormats() {
@@ -329,7 +324,6 @@ public class TestUriDetection {
     runTest("hello http%3A//google.com", UrlDetectorOptions.Default, "http%3A//google.com");
   }
 
-
   @Test
   public void testIncompleteBracketSet() {
     runTest("[google.com", UrlDetectorOptions.BRACKET_MATCH, "google.com");
@@ -347,8 +341,7 @@ public class TestUriDetection {
   }
 
   @Test
-  public void testSingleLevelDomain()
-  {
+  public void testSingleLevelDomain() {
     runTest("localhost:9000/lalala hehe", UrlDetectorOptions.ALLOW_SINGLE_LEVEL_DOMAIN, "localhost:9000/lalala");
     runTest("http://localhost lasdf", UrlDetectorOptions.ALLOW_SINGLE_LEVEL_DOMAIN, "http://localhost");
     runTest("localhost:9000/lalala", UrlDetectorOptions.ALLOW_SINGLE_LEVEL_DOMAIN, "localhost:9000/lalala");
@@ -545,7 +538,7 @@ public class TestUriDetection {
   @Test
   public void testIpv6IncorrectParsingHtmlWithBadOptions() {
     runTest("<a href=\"http://[::AAbb:]/\">google.com</a>", UrlDetectorOptions.Default,
-        //Doesn't have the http since it was read as "http:// and goes to the end.
+    //Doesn't have the http since it was read as "http:// and goes to the end.
         "[::AAbb:]/\">google.com</a>");
   }
 
@@ -638,7 +631,6 @@ public class TestUriDetection {
   public void testBacktrackInvalidUsernamePassword() {
     runTest("http://hello:asdf.com", UrlDetectorOptions.Default, "asdf.com");
   }
-
 
   private void runTest(String text, UrlDetectorOptions options, String... expected) {
     //do the detection

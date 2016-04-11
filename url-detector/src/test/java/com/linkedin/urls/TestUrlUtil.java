@@ -9,10 +9,10 @@
  */
 package com.linkedin.urls;
 
-import com.linkedin.urls.UrlUtil;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 
 public class TestUrlUtil {
 
@@ -46,7 +46,6 @@ public class TestUrlUtil {
     Assert.assertEquals(UrlUtil.decode(input), expectedDecodedString);
   }
 
-
   @DataProvider
   private Object[][] getEncodeStrings() {
     return new Object[][] {
@@ -59,7 +58,6 @@ public class TestUrlUtil {
   public void testEncode(String input, String expectedEncodedString) {
     Assert.assertEquals(UrlUtil.encode(input), expectedEncodedString);
   }
-
 
   @DataProvider
   private Object[][] getExtraDotsStrings() {

@@ -23,17 +23,6 @@ public class UrlMarker {
   public UrlMarker() {
   }
 
-  protected UrlMarker(UrlMarker urlMarker) {
-    this._originalUrl = urlMarker.getOriginalUrl();
-    this._schemeIndex = urlMarker._schemeIndex;
-    this._usernamePasswordIndex = urlMarker._usernamePasswordIndex;
-    this._hostIndex = urlMarker._hostIndex;
-    this._portIndex = urlMarker._portIndex;
-    this._pathIndex = urlMarker._pathIndex;
-    this._queryIndex = urlMarker._queryIndex;
-    this._fragmentIndex = urlMarker._fragmentIndex;
-  }
-
   public Url createUrl() {
     return new Url(this);
   }
@@ -68,6 +57,8 @@ public class UrlMarker {
         break;
       case FRAGMENT:
         _fragmentIndex = index;
+        break;
+      default:
         break;
     }
   }

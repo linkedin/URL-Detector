@@ -12,15 +12,14 @@ package com.linkedin.urls.detection;
 import java.util.ArrayList;
 import org.apache.commons.lang3.StringUtils;
 
+
 public class CharUtils {
 
   /**
    * Checks if character is a valid hex character.
    */
   public static boolean isHex(char a) {
-    return (a >= '0' && a <= '9') ||
-        (a >= 'a' && a <= 'f') ||
-        (a >= 'A' && a <= 'F');
+    return (a >= '0' && a <= '9') || (a >= 'a' && a <= 'f') || (a >= 'A' && a <= 'F');
   }
 
   /**
@@ -72,7 +71,7 @@ public class CharUtils {
     ArrayList<String> splitList = new ArrayList<String>();
     StringBuilder section = new StringBuilder();
     if (StringUtils.isEmpty(input)) {
-      return new String[] {""};
+      return new String[] { "" };
     }
     InputTextReader reader = new InputTextReader(input);
     while (!reader.eof()) {
@@ -92,4 +91,6 @@ public class CharUtils {
     splitList.add(section.toString());
     return splitList.toArray(new String[splitList.size()]);
   }
+
+  private CharUtils() { }
 }
