@@ -29,7 +29,7 @@ It is also able to identify the parts of the identified urls. For example, for t
 ---
 ## How to Use:
 
-Using the URL detector library is simple. Simple import the UrlDetector object and give it some options. In response, you will get a list of urls which were detected.
+Using the URL detector library is simple. Simply import the UrlDetector object and give it some options. In response, you will get a list of urls which were detected.
 
 For example, the following code will find the url `linkedin.com`
 
