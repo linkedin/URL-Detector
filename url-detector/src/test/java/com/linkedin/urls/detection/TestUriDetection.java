@@ -365,6 +365,23 @@ public class TestUriDetection {
   }
 
   @Test
+  public void testIncompleteIpAddresses() {
+    runTest("hello 10...", UrlDetectorOptions.Default);
+    runTest("hello 10...1", UrlDetectorOptions.Default);
+    runTest("hello 10..1.", UrlDetectorOptions.Default);
+    runTest("hello 10..1.1", UrlDetectorOptions.Default);
+    runTest("hello 10.1..1", UrlDetectorOptions.Default);
+    runTest("hello 10.1.1.", UrlDetectorOptions.Default);
+    runTest("hello .192..", UrlDetectorOptions.Default);
+    runTest("hello .192..1", UrlDetectorOptions.Default);
+    runTest("hello .192.1.", UrlDetectorOptions.Default);
+    runTest("hello .192.1.1", UrlDetectorOptions.Default);
+    runTest("hello ..3.", UrlDetectorOptions.Default);
+    runTest("hello ..3.1", UrlDetectorOptions.Default);
+    runTest("hello ...1", UrlDetectorOptions.Default);
+  }
+
+  @Test
   public void testIPv4EncodedDot() {
     runTest("hello 192%2e168%2e1%2e1", UrlDetectorOptions.Default, "192%2e168%2e1%2e1");
     runTest("hello 192.168%2e1%2e1/lalala", UrlDetectorOptions.Default, "192.168%2e1%2e1/lalala");

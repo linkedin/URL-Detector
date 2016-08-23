@@ -549,6 +549,8 @@ public class DomainNameReader {
             if (section < MIN_IP_PART || section > MAX_IP_PART) {
               valid = false;
             }
+          } else {
+            valid = false;
           }
         }
       }
