@@ -1,0 +1,5 @@
+target/
+.DS_STORE
+.gradle
+.idea
+*.iml
