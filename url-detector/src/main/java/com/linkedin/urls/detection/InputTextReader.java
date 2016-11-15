@@ -42,8 +42,13 @@ public class InputTextReader {
   /**
    * Creates a new instance of the InputTextReader using the content to read.
    * @param content The content to read.
+   * @throws {@link NullPointerException} if {@code content == null} .
    */
-  public InputTextReader(String content) {
+  public InputTextReader(String content) throws NullPointerException {
+    if (content == null) {
+      throw new NullPointerException("content must't be null.");
+    }
+
     _content = content.toCharArray();
   }
 
