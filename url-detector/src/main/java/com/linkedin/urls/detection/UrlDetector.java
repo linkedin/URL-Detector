@@ -12,6 +12,7 @@ package com.linkedin.urls.detection;
 import com.linkedin.urls.Url;
 import com.linkedin.urls.UrlMarker;
 import com.linkedin.urls.UrlPart;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -119,8 +120,13 @@ public class UrlDetector {
    * Creates a new UrlDetector object used to find urls inside of text.
    * @param content The content to search inside of.
    * @param options The UrlDetectorOptions to use when detecting the content.
+   * @throws {@link NullPointerException} if {@code content == null} .
    */
-  public UrlDetector(String content, UrlDetectorOptions options) {
+  public UrlDetector(String content, UrlDetectorOptions options) throws NullPointerException {
+    if (content == null) {
+      throw new NullPointerException("content must't be null.");
+    }
+
     _reader = new InputTextReader(content);
     _options = options;
   }
