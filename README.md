@@ -1,5 +1,7 @@
 # Url Detector
 
+[![Build Status](https://travis-ci.org/linkedin/URL-Detector.svg?branch=master)](https://travis-ci.org/linkedin/URL-Detector)
+
 The url detector is a library created by the Linkedin Security Team to detect and extract urls in a long piece of text.
 
 It is able to find and detect any urls such as:
