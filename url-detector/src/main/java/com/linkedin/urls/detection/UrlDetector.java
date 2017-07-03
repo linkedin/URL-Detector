@@ -154,7 +154,6 @@ public class UrlDetector {
     while (!_reader.eof()) {
       //read the next char to process.
       char curr = _reader.read();
-
       switch (curr) {
         case ' ':
           //space was found, check if it's a valid single level domain.
@@ -188,7 +187,8 @@ public class UrlDetector {
         case '\uFF61':
         case '.': //"." was found, read the domain name using the start from length.
           _buffer.append(curr);
-          readDomainName(_buffer.substring(length));
+          String substring = _buffer.substring(length);
+          readDomainName(substring);
           length = 0;
           break;
         case '@': //Check the domain name after a username
@@ -277,10 +277,15 @@ public class UrlDetector {
   private int processColon(int length) {
     if (_hasScheme) {
       //read it as username/password if it has scheme
-      if (!readUserPass(length) && _buffer.length() > 0) {
+      if (!readUserPass(length)) {
         //unread the ":" so that the domain reader can process it
         _reader.goBack();
-        _buffer.delete(_buffer.length() - 1, _buffer.length());
+        
+        if (_buffer.length() > 0) {
+        	_buffer.delete(_buffer.length() - 1, _buffer.length());
+        } else {
+        	length = 0;
+        }
 
         int backtrackOnFail = _reader.getPosition() - _buffer.length() + length;
         if (!readDomainName(_buffer.substring(length))) {
@@ -470,10 +475,9 @@ public class UrlDetector {
    * @return True if a valid username and password was found.
    */
   private boolean readUserPass(int beginningOfUsername) {
-
     //The start of where we are.
     int start = _buffer.length();
-
+    
     //keep looping until "done"
     boolean done = false;
 
