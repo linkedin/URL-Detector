@@ -280,10 +280,11 @@ public class UrlDetector {
         //unread the ":" so that the domain reader can process it
         _reader.goBack();
         
+        // Check buffer length before clearing it; set length to 0 if buffer is empty
         if (_buffer.length() > 0) {
-        	_buffer.delete(_buffer.length() - 1, _buffer.length());
+          _buffer.delete(_buffer.length() - 1, _buffer.length());
         } else {
-        	length = 0;
+          length = 0;
         }
 
         int backtrackOnFail = _reader.getPosition() - _buffer.length() + length;
@@ -293,6 +294,8 @@ public class UrlDetector {
           readEnd(ReadEndState.InvalidUrl);
         }
         length = 0;
+      } else {
+    	length = 0;
       }
     } else if (readScheme() && _buffer.length() > 0) {
       _hasScheme = true;
