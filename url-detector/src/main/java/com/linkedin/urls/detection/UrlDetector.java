@@ -187,8 +187,7 @@ public class UrlDetector {
         case '\uFF61':
         case '.': //"." was found, read the domain name using the start from length.
           _buffer.append(curr);
-          String substring = _buffer.substring(length);
-          readDomainName(substring);
+          readDomainName(_buffer.substring(length));
           length = 0;
           break;
         case '@': //Check the domain name after a username
