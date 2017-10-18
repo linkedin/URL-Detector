@@ -102,7 +102,16 @@ public class DomainNameReader {
     /**
      * Finished reading, next step should be to read the query string.
      */
-    ReadQueryString
+    ReadQueryString,
+    /**
+     * Encountered an '@' while trying to read a domain name.
+     * We were possibly trying to read a domain name because we found a dot. But a dot is a common character
+     * in an e-mail address as well. If this case is not accounted for, things like first.last@domain.com will be
+     * detected as
+     * http://first.last
+     * http://domain.com
+     */
+    ReadUserPass
   }
 
   /**
@@ -332,6 +341,9 @@ public class DomainNameReader {
       } else if (curr == '#') {
         //continue by reading the fragment
         return checkDomainNameValid(ReaderNextState.ReadFragment, curr);
+      } else if (curr == '@') {
+        _buffer.append(curr);
+        return ReaderNextState.ReadUserPass;
       } else if (CharUtils.isDot(curr)
           || (curr == '%' && _reader.canReadChars(2) && _reader.peek(2).equalsIgnoreCase(HEX_ENCODED_DOT))) {
         //if the current character is a dot or a urlEncodedDot
