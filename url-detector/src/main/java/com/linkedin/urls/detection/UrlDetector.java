@@ -534,6 +534,9 @@ public class UrlDetector {
           }
         });
 
+    //The start of where we are.
+    int startBufferLen = _buffer.length();
+    
     //Try to read the dns and act on the response.
     DomainNameReader.ReaderNextState state = reader.readDomainName();
     switch (state) {
@@ -547,6 +550,16 @@ public class UrlDetector {
         return readPort();
       case ReadQueryString:
         return readQueryString();
+      case ReadUserPass:
+        // found an '@' while trying to read a domain name. rollback, and try to read user/pass
+        _currentUrlMarker.unsetIndex(UrlPart.HOST);
+        int distance = _buffer.length() - startBufferLen;
+        _buffer.delete(startBufferLen, _buffer.length());
+        
+        int currIndex = Math.max(_reader.getPosition() - distance, 0);
+        _reader.seek(currIndex);
+        
+        return readUserPass(hostIndex);
       default:
         return readEnd(ReadEndState.InvalidUrl);
     }
