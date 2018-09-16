@@ -649,6 +649,14 @@ public class TestUriDetection {
     runTest("http://hello:asdf.com", UrlDetectorOptions.Default, "asdf.com");
   }
 
+  /*
+   * https://github.com/linkedin/URL-Detector/issues/16
+   */
+  @Test
+  public void testIssue16() {
+    runTest("://VIVE MARINE LE PEN//:@.", UrlDetectorOptions.Default);
+  }
+
   private void runTest(String text, UrlDetectorOptions options, String... expected) {
     //do the detection
     UrlDetector parser = new UrlDetector(text, options);
