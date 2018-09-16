@@ -657,6 +657,14 @@ public class TestUriDetection {
     runTest("http://user:pass@host.com host.com", UrlDetectorOptions.Default, "http://user:pass@host.com", "host.com");
   }
 
+  /*
+   * https://github.com/linkedin/URL-Detector/issues/16
+   */
+  @Test
+  public void testIssue16() {
+    runTest("://VIVE MARINE LE PEN//:@.", UrlDetectorOptions.Default);
+  }
+
   private void runTest(String text, UrlDetectorOptions options, String... expected) {
     //do the detection
     UrlDetector parser = new UrlDetector(text, options);
