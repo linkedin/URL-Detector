@@ -102,7 +102,11 @@ public class DomainNameReader {
     /**
      * Finished reading, next step should be to read the query string.
      */
-    ReadQueryString
+    ReadQueryString,
+    /**
+     * This was actually not a domain at all.
+     */
+    ReadUserPass
   }
 
   /**
@@ -332,6 +336,10 @@ public class DomainNameReader {
       } else if (curr == '#') {
         //continue by reading the fragment
         return checkDomainNameValid(ReaderNextState.ReadFragment, curr);
+      } else if (curr == '@') {
+        //this may not have been a domain after all, but rather a username/password instead
+        _reader.goBack();
+        return ReaderNextState.ReadUserPass;
       } else if (CharUtils.isDot(curr)
           || (curr == '%' && _reader.canReadChars(2) && _reader.peek(2).equalsIgnoreCase(HEX_ENCODED_DOT))) {
         //if the current character is a dot or a urlEncodedDot

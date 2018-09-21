@@ -658,6 +658,18 @@ public class TestUriDetection {
   }
 
   /*
+   * https://github.com/linkedin/URL-Detector/issues/13
+   */
+  @Test
+  public void testIssue13() {
+    runTest("user@github.io/page", UrlDetectorOptions.Default, "user@github.io/page");
+    runTest("name@gmail.com", UrlDetectorOptions.Default, "name@gmail.com");
+    runTest("name.lastname@gmail.com", UrlDetectorOptions.Default, "name.lastname@gmail.com");
+    runTest("gmail.com@gmail.com", UrlDetectorOptions.Default, "gmail.com@gmail.com");
+    runTest("first.middle.reallyreallyreallyreallyreallyreallyreallyreallyreallyreallylonglastname@gmail.com", UrlDetectorOptions.Default, "first.middle.reallyreallyreallyreallyreallyreallyreallyreallyreallyreallylonglastname@gmail.com");
+  }
+
+  /*
    * https://github.com/linkedin/URL-Detector/issues/16
    */
   @Test
