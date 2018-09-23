@@ -59,13 +59,4 @@ public class TestInputTextReader {
     reader.seek(1);
     Assert.assertEquals(reader.read(), CONTENT.charAt(1));
   }
-
-  @Test(expectedExceptions = NegativeArraySizeException.class, expectedExceptionsMessageRegExp = ".*" + CONTENT + ".*")
-  public void testEndlessLoopDetection() {
-    InputTextReader reader = new InputTextReader(CONTENT);
-    for (int i = 0; i < InputTextReader.MAX_BACKTRACK_MULTIPLIER + 1; i++) {
-      reader.seek(CONTENT.length());
-      reader.seek(0);
-    }
-  }
 }

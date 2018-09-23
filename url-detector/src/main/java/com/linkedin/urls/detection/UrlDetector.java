@@ -126,15 +126,6 @@ public class UrlDetector {
   }
 
   /**
-   * Gets the number of characters that were backtracked while reading the input. This is useful for performance
-   * measurement.
-   * @return The count of characters that were backtracked while reading.
-   */
-  public int getBacktracked() {
-    return _reader.getBacktrackedCount();
-  }
-
-  /**
    * Detects the urls and returns a list of detected url strings.
    * @return A list with detected urls.
    */
