@@ -15,11 +15,6 @@ package com.linkedin.urls.detection;
 public class InputTextReader {
 
   /**
-   * The number of times something can be backtracked is this multiplier times the length of the string.
-   */
-  protected static final int MAX_BACKTRACK_MULTIPLIER = 10;
-
-  /**
    * The content to read.
    */
   private final char[] _content;
@@ -28,16 +23,6 @@ public class InputTextReader {
    * The current position in the content we are looking at.
    */
   private int _index = 0;
-
-  /**
-   * Contains the amount of characters that were backtracked. This is used for performance analysis.
-   */
-  private int _backtracked = 0;
-
-  /**
-   * When detecting for exceeding the backtrack limit, make sure the text is at least 20 characters.
-   */
-  private final static int MINIMUM_BACKTRACK_LENGTH = 20;
 
   /**
    * Creates a new instance of the InputTextReader using the content to read.
@@ -103,46 +88,17 @@ public class InputTextReader {
   }
 
   /**
-   * Gets the total number of characters that were backtracked when reading.
-   */
-  public int getBacktrackedCount() {
-    return _backtracked;
-  }
-
-  /**
    * Moves the index to the specified position.
    * @param position The position to set the index to.
    */
   public void seek(int position) {
-    int backtrackLength = Math.max(_index - position, 0);
-    _backtracked += backtrackLength;
     _index = position;
-    checkBacktrackLoop(backtrackLength);
   }
 
   /**
    * Goes back a single character.
    */
   public void goBack() {
-    _backtracked++;
     _index--;
-    checkBacktrackLoop(1);
-  }
-
-  private void checkBacktrackLoop(int backtrackLength) {
-    if (_backtracked > (_content.length * MAX_BACKTRACK_MULTIPLIER)) {
-      if (backtrackLength < MINIMUM_BACKTRACK_LENGTH) {
-        backtrackLength = MINIMUM_BACKTRACK_LENGTH;
-      }
-
-      int start = Math.max(_index, 0);
-      if (start + backtrackLength > _content.length) {
-        backtrackLength = _content.length - start;
-      }
-
-      String badText = new String(_content, start, backtrackLength);
-      throw new NegativeArraySizeException("Backtracked max amount of characters. Endless loop detected. Bad Text: '"
-          + badText + "'");
-    }
   }
 }

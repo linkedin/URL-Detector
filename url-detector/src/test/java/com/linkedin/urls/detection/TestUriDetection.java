@@ -648,6 +648,42 @@ public class TestUriDetection {
   public void testBacktrackInvalidUsernamePassword() {
     runTest("http://hello:asdf.com", UrlDetectorOptions.Default, "asdf.com");
   }
+  
+  /*
+   * https://github.com/linkedin/URL-Detector/issues/12
+   */
+  @Test
+  public void testIssue12() {
+    runTest("http://user:pass@host.com host.com", UrlDetectorOptions.Default, "http://user:pass@host.com", "host.com");
+  }
+
+  /*
+   * https://github.com/linkedin/URL-Detector/issues/13
+   */
+  @Test
+  public void testIssue13() {
+    runTest("user@github.io/page", UrlDetectorOptions.Default, "user@github.io/page");
+    runTest("name@gmail.com", UrlDetectorOptions.Default, "name@gmail.com");
+    runTest("name.lastname@gmail.com", UrlDetectorOptions.Default, "name.lastname@gmail.com");
+    runTest("gmail.com@gmail.com", UrlDetectorOptions.Default, "gmail.com@gmail.com");
+    runTest("first.middle.reallyreallyreallyreallyreallyreallyreallyreallyreallyreallylonglastname@gmail.com", UrlDetectorOptions.Default, "first.middle.reallyreallyreallyreallyreallyreallyreallyreallyreallyreallylonglastname@gmail.com");
+  }
+  
+  /*
+   * https://github.com/linkedin/URL-Detector/issues/15
+   */
+  @Test
+  public void testIssue15() {
+    runTest(".............:::::::::::;;;;;;;;;;;;;;;::...............................................:::::::::::::::::::::::::::::....................", UrlDetectorOptions.Default);
+  }
+
+  /*
+   * https://github.com/linkedin/URL-Detector/issues/16
+   */
+  @Test
+  public void testIssue16() {
+    runTest("://VIVE MARINE LE PEN//:@.", UrlDetectorOptions.Default);
+  }
 
   private void runTest(String text, UrlDetectorOptions options, String... expected) {
     //do the detection

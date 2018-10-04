@@ -126,15 +126,6 @@ public class UrlDetector {
   }
 
   /**
-   * Gets the number of characters that were backtracked while reading the input. This is useful for performance
-   * measurement.
-   * @return The count of characters that were backtracked while reading.
-   */
-  public int getBacktracked() {
-    return _reader.getBacktrackedCount();
-  }
-
-  /**
    * Detects the urls and returns a list of detected url strings.
    * @return A list with detected urls.
    */
@@ -154,13 +145,14 @@ public class UrlDetector {
     while (!_reader.eof()) {
       //read the next char to process.
       char curr = _reader.read();
-
       switch (curr) {
         case ' ':
           //space was found, check if it's a valid single level domain.
           if (_options.hasFlag(UrlDetectorOptions.ALLOW_SINGLE_LEVEL_DOMAIN) && _buffer.length() > 0 && _hasScheme) {
             _reader.goBack();
-            readDomainName(_buffer.substring(length));
+            if (!readDomainName(_buffer.substring(length))) {
+              readEnd(ReadEndState.InvalidUrl);
+            };
           }
           _buffer.append(curr);
           readEnd(ReadEndState.InvalidUrl);
@@ -178,7 +170,9 @@ public class UrlDetector {
               _buffer.append(_reader.read());
               _buffer.append(_reader.read());
 
-              readDomainName(_buffer.substring(length));
+              if (!readDomainName(_buffer.substring(length))) {
+                readEnd(ReadEndState.InvalidUrl);
+              }
               length = 0;
             }
           }
@@ -188,14 +182,18 @@ public class UrlDetector {
         case '\uFF61':
         case '.': //"." was found, read the domain name using the start from length.
           _buffer.append(curr);
-          readDomainName(_buffer.substring(length));
+          if (!readDomainName(_buffer.substring(length))) {
+            readEnd(ReadEndState.InvalidUrl);
+          }
           length = 0;
           break;
         case '@': //Check the domain name after a username
           if (_buffer.length() > 0) {
             _currentUrlMarker.setIndex(UrlPart.USERNAME_PASSWORD, length);
             _buffer.append(curr);
-            readDomainName(null);
+            if (!readDomainName(null)) {
+              readEnd(ReadEndState.InvalidUrl);
+            }
             length = 0;
           }
           break;
@@ -218,6 +216,7 @@ public class UrlDetector {
 
           if (!readDomainName(_buffer.substring(length))) {
             //if we didn't find an ipv6 address, then check inside the brackets for urls
+            readEnd(ReadEndState.InvalidUrl);
             _reader.seek(beginning);
             _dontMatchIpv6 = true;
           }
@@ -235,7 +234,9 @@ public class UrlDetector {
 
             //unread this "/" and continue to check the domain name starting from the beginning of the domain
             _reader.goBack();
-            readDomainName(_buffer.substring(length));
+            if (!readDomainName(_buffer.substring(length))) {
+              readEnd(ReadEndState.InvalidUrl);
+            }
             length = 0;
           } else {
 
@@ -265,7 +266,9 @@ public class UrlDetector {
       }
     }
     if (_options.hasFlag(UrlDetectorOptions.ALLOW_SINGLE_LEVEL_DOMAIN) && _buffer.length() > 0 && _hasScheme) {
-      readDomainName(_buffer.substring(length));
+      if (!readDomainName(_buffer.substring(length))) {
+        readEnd(ReadEndState.InvalidUrl);
+      }
     }
   }
 
@@ -277,10 +280,16 @@ public class UrlDetector {
   private int processColon(int length) {
     if (_hasScheme) {
       //read it as username/password if it has scheme
-      if (!readUserPass(length) && _buffer.length() > 0) {
+      if (!readUserPass(length)) {
         //unread the ":" so that the domain reader can process it
         _reader.goBack();
-        _buffer.delete(_buffer.length() - 1, _buffer.length());
+        
+        // Check buffer length before clearing it; set length to 0 if buffer is empty
+        if (_buffer.length() > 0) {
+          _buffer.delete(_buffer.length() - 1, _buffer.length());
+        } else {
+          length = 0;
+        }
 
         int backtrackOnFail = _reader.getPosition() - _buffer.length() + length;
         if (!readDomainName(_buffer.substring(length))) {
@@ -289,6 +298,8 @@ public class UrlDetector {
           readEnd(ReadEndState.InvalidUrl);
         }
         length = 0;
+      } else {
+    	length = 0;
       }
     } else if (readScheme() && _buffer.length() > 0) {
       _hasScheme = true;
@@ -297,7 +308,9 @@ public class UrlDetector {
         && _reader.canReadChars(1)) { //takes care of case like hi:
       _reader.goBack(); //unread the ":" so readDomainName can take care of the port
       _buffer.delete(_buffer.length() - 1, _buffer.length());
-      readDomainName(_buffer.toString());
+      if (!readDomainName(_buffer.toString())) {
+        readEnd(ReadEndState.InvalidUrl);
+      }
     } else {
       readEnd(ReadEndState.InvalidUrl);
       length = 0;
@@ -470,10 +483,9 @@ public class UrlDetector {
    * @return True if a valid username and password was found.
    */
   private boolean readUserPass(int beginningOfUsername) {
-
     //The start of where we are.
     int start = _buffer.length();
-
+    
     //keep looping until "done"
     boolean done = false;
 
@@ -547,8 +559,12 @@ public class UrlDetector {
         return readPort();
       case ReadQueryString:
         return readQueryString();
+      case ReadUserPass:
+        int host = _currentUrlMarker.indexOf(UrlPart.HOST);
+        _currentUrlMarker.unsetIndex(UrlPart.HOST);
+        return readUserPass(host);
       default:
-        return readEnd(ReadEndState.InvalidUrl);
+        return false;
     }
   }
 

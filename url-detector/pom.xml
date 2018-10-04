@@ -2,14 +2,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.linkedin.urls</groupId>
+  <groupId>io.github.pgalbraith</groupId>
   <artifactId>url-detector</artifactId>
-  <version>0.1.17</version>
+  <version>0.1.20</version>
   <packaging>jar</packaging>
 
-  <name>com.linkedin.urls:url-detector</name>
+  <name>io.github.pgalbraith:url-detector</name>
   <description>A Java library to detect and normalize URLs in text</description>
-  <url>https://github.com/linkedin/URL-Detector</url>
+  <url>https://github.com/pgalbraith/URL-Detector</url>
 
   <licenses>
     <license>
@@ -19,11 +19,15 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:git://github.com/linkedin/URL-Detector.git</connection>
-    <developerConnection>scm:git:ssh://github.com:linkedin/URL-Detector.git</developerConnection>
-    <url>https://github.com/linkedin/URL-Detector/tree/master</url>
+    <connection>scm:git:git://github.com/pgalbraith/URL-Detector.git</connection>
+    <developerConnection>scm:git:ssh://github.com:pgalbraith/URL-Detector.git</developerConnection>
+    <url>https://github.com/pgalbraith/URL-Detector/tree/master</url>
   </scm>
-      
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
   <dependencies>
     <dependency>
         <groupId>org.testng</groupId>
@@ -94,6 +98,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.7</version>
         <configuration>
           <skip>true</skip>
         </configuration>
@@ -101,6 +106,7 @@
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.8</version>
         <executions>
           <execution>
             <id>default-deploy</id>

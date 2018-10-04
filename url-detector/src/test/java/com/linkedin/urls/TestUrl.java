@@ -28,7 +28,8 @@ public class TestUrl {
         {"@www.google.com", "www.google.com", "/", "", ""},
         {"lalal:@www.gogo.com", "www.gogo.com", "/", "lalal", ""},
         {"nono:boo@[::1]", "[::1]", "/", "nono", "boo"},
-        {"nono:boo@yahoo.com/@1234", "yahoo.com", "/@1234", "nono", "boo"}
+        {"nono:boo@yahoo.com/@1234", "yahoo.com", "/@1234", "nono", "boo"},
+        {"big.big.boss@google.com", "google.com", "/", "big.big.boss", ""}
     };
   }
 
