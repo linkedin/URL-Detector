@@ -1,5 +1,7 @@
 # Url Detector
 
+NOTE: This is a fork of the original https://github.com/linkedin/URL-Detector, which seems to be abandoned.  This fork was created to allow continued maintenance by the OS community.
+
 The url detector is a library created by the Linkedin Security Team to detect and extract urls in a long piece of text.
 
 It is able to find and detect any urls such as:
@@ -64,6 +66,17 @@ In code this looks like:
 
 ```
 
+### Maven Usage:
+
+To use the latest release, add the following dependency to your pom.xml:
+
+```xml
+    <dependency>
+        <groupId>io.github.url-detector</groupId>
+        <artifactId>url-detector</artifactId>
+        <version>0.1.20</version>
+    </dependency>
+```
 
 ---
 ## About:

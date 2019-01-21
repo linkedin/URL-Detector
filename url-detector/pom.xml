@@ -2,14 +2,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>io.github.pgalbraith</groupId>
+  <groupId>io.github.url-detector</groupId>
   <artifactId>url-detector</artifactId>
   <version>0.1.20</version>
   <packaging>jar</packaging>
 
-  <name>io.github.pgalbraith:url-detector</name>
+  <name>io.github.url-detector:url-detector</name>
   <description>A Java library to detect and normalize URLs in text</description>
-  <url>https://github.com/pgalbraith/URL-Detector</url>
+  <url>https://github.com/URL-Detector/URL-Detector</url>
 
   <licenses>
     <license>
@@ -19,9 +19,9 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:git://github.com/pgalbraith/URL-Detector.git</connection>
-    <developerConnection>scm:git:ssh://github.com:pgalbraith/URL-Detector.git</developerConnection>
-    <url>https://github.com/pgalbraith/URL-Detector/tree/master</url>
+    <connection>scm:git:git://github.com/url-detector/URL-Detector.git</connection>
+    <developerConnection>scm:git:ssh://github.com/url-detector/URL-Detector.git</developerConnection>
+    <url>https://github.com/url-detector/URL-Detector/tree/master</url>
   </scm>
 
   <properties>
