@@ -1,4 +1,4 @@
-# Url Detector
+# URL Detector
 
 NOTE: This is a fork of the original https://github.com/linkedin/URL-Detector, which seems to be abandoned.  This fork was created to allow continued maintenance by the OS community.
 
@@ -90,12 +90,12 @@ This library was written by the security team and Linkedin when other options di
 ---
 ## Third Party Dependencies
 
-####TestNG
+### TestNG
 * http://testng.org/
 * Copyright © 2004-2014 Cédric Beust
 * License: Apache 2.0
 
-####Apache CommonsLang3: org.apache.commons:commons-lang3:3.1
+### Apache CommonsLang3: org.apache.commons:commons-lang3:3.1
 * http://commons.apache.org/proper/commons-lang/
 * Copyright © 2001-2014 The Apache Software Foundation
 * License: Apache 2.0
