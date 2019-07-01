@@ -29,7 +29,9 @@ public class TestUrl {
         {"lalal:@www.gogo.com", "www.gogo.com", "/", "lalal", ""},
         {"nono:boo@[::1]", "[::1]", "/", "nono", "boo"},
         {"nono:boo@yahoo.com/@1234", "yahoo.com", "/@1234", "nono", "boo"},
-        {"big.big.boss@google.com", "google.com", "/", "big.big.boss", ""}
+        {"big.big.boss@google.com", "google.com", "/", "big.big.boss", ""},
+        {"big.big.boss@013.xxx", "013.xxx", "/", "big.big.boss", ""},
+        {"big.big.boss@0xb02067cz", "0xb02067cz", "/", "big.big.boss", ""},
     };
   }
 
@@ -117,7 +119,8 @@ public class TestUrl {
         {"fbeoo:@boop.com/dhdeh/@1234?aj=r", "boop.com", "http://fbeoo@boop.com/dhdeh/@1234?aj=r"},
         {"bloop:@noooo.com/doop/@1234", "noooo.com", "http://bloop@noooo.com/doop/@1234"},
         {"bah.com/lala/@1234/@dfd@df?@dsf#ono", "bah.com", "http://bah.com/lala/@1234/@dfd@df?@dsf#ono"},
-        {"https://dewd:dood@www.google.com:20/?why=is&this=test#?@Sdsf", "www.google.com", "https://dewd:dood@www.google.com:20/?why=is&this=test#?@Sdsf"}
+        {"https://dewd:dood@www.google.com:20/?why=is&this=test#?@Sdsf", "www.google.com", "https://dewd:dood@www.google.com:20/?why=is&this=test#?@Sdsf"},
+        {"http://013.xxx/","013.xxx", "http://013.xxx/"}
     };
   }
 

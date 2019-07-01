@@ -320,6 +320,17 @@ public class DomainNameReader {
 
     //while not done and not end of string keep reading.
     boolean done = false;
+    boolean isAllHexSoFar = _reader.canReadChars(3) &&
+      ("0x".equalsIgnoreCase(_reader.peek(2)));
+
+    if (isAllHexSoFar) {
+      //append hexa radix symbol characters
+      _buffer.append(_reader.read());
+      _buffer.append(_reader.read());
+      _currentLabelLength += 2;
+      _topLevelLength = _currentLabelLength;
+    }
+
     while (!done && !_reader.eof()) {
       char curr = _reader.read();
 
@@ -399,8 +410,11 @@ public class DomainNameReader {
           _reader.goBack();
           done = true;
         } else {
+          if (isAllHexSoFar && !CharUtils.isHex(curr)) {
+            _numeric = false;
+          }
           //if its not numeric, remember that; excluded x/X for hex ip addresses.
-          if (curr != 'x' && curr != 'X' && !CharUtils.isNumeric(curr)) {
+          if (!isAllHexSoFar && !CharUtils.isNumeric(curr)) {
             _numeric = false;
           }
 
