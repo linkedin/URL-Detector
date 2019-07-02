@@ -320,7 +320,8 @@ public class DomainNameReader {
 
     //while not done and not end of string keep reading.
     boolean done = false;
-    boolean isAllHexSoFar = _reader.canReadChars(3) &&
+    boolean isAllHexSoFar = (_current == null || _current.equals("")) &&
+      _reader.canReadChars(3) &&
       ("0x".equalsIgnoreCase(_reader.peek(2)));
 
     if (isAllHexSoFar) {
