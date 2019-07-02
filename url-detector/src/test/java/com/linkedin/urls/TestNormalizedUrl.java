@@ -83,7 +83,7 @@ public class TestNormalizedUrl {
         {"http://host.com/ab%23cd", "http://host.com/ab%23cd"},
         {"http://host.com//twoslashes?more//slashes", "http://host.com/twoslashes?more//slashes"},
         {"http://go.co/a/b/../c", "http://go.co/a/c"},
-        {"http://0xb02067cd/", "http://176.32.103.205/"},
+        {"http://big.big.boss@0xb02067cd/", "http://big.big.boss@176.32.103.205/"},
         {"http://www.0xb02067cd/", "http://www.0xb02067cd/"},
     };
   }

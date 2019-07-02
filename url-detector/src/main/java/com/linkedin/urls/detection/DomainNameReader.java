@@ -413,7 +413,7 @@ public class DomainNameReader {
           if (isAllHexSoFar && !CharUtils.isHex(curr)) {
             _numeric = false;
           }
-          //if its not numeric, remember that; excluded x/X for hex ip addresses.
+          //if its not numeric, remember that;
           if (!isAllHexSoFar && !CharUtils.isNumeric(curr)) {
             _numeric = false;
           }
