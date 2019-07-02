@@ -320,12 +320,15 @@ public class DomainNameReader {
 
     //while not done and not end of string keep reading.
     boolean done = false;
-    boolean isAllHexSoFar = (_current == null || _current.equals("")) &&
-      _reader.canReadChars(3) &&
+
+    //If this is the first domain part, check if it's ip address in is hexa
+    //similar to what is done on 'readCurrent' method
+    boolean isAllHexSoFar = (_current == null || _current.equals(""))
+      && _reader.canReadChars(3) &&
       ("0x".equalsIgnoreCase(_reader.peek(2)));
 
     if (isAllHexSoFar) {
-      //append hexa radix symbol characters
+      //Append hexa radix symbol characters (0x)
       _buffer.append(_reader.read());
       _buffer.append(_reader.read());
       _currentLabelLength += 2;
