@@ -82,7 +82,9 @@ public class TestNormalizedUrl {
         {"https://www.securesite.com/", "https://www.securesite.com/"},
         {"http://host.com/ab%23cd", "http://host.com/ab%23cd"},
         {"http://host.com//twoslashes?more//slashes", "http://host.com/twoslashes?more//slashes"},
-        {"http://go.co/a/b/../c", "http://go.co/a/c"}
+        {"http://go.co/a/b/../c", "http://go.co/a/c"},
+        {"http://0xb02067cd/", "http://176.32.103.205/"},
+        {"http://www.0xb02067cd/", "http://www.0xb02067cd/"},
     };
   }
 
