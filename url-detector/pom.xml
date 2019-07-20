@@ -4,7 +4,7 @@
 
   <groupId>io.github.url-detector</groupId>
   <artifactId>url-detector</artifactId>
-  <version>0.1.20</version>
+  <version>0.1.21</version>
   <packaging>jar</packaging>
 
   <name>io.github.url-detector:url-detector</name>
