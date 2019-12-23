@@ -140,9 +140,11 @@ public class UrlDetector {
   private void readDefault() {
     //Keeps track of the number of characters read to be able to later cut out the domain name.
     int length = 0;
+    int position = 0;
 
     //until end of string read the contents
     while (!_reader.eof()) {
+        
       //read the next char to process.
       char curr = _reader.read();
       switch (curr) {
@@ -264,6 +266,13 @@ public class UrlDetector {
           }
           break;
       }
+          
+      if (position == _reader.getPosition()) {
+          // we haven't made any progress, advance by one char
+          _reader.read();
+      }
+      
+      position = _reader.getPosition();
     }
     if (_options.hasFlag(UrlDetectorOptions.ALLOW_SINGLE_LEVEL_DOMAIN) && _buffer.length() > 0 && _hasScheme) {
       if (!readDomainName(_buffer.substring(length))) {

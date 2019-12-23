@@ -1,3 +1,8 @@
+v0.1.22
+-------
+
+* Fixed: https://github.com/URL-Detector/URL-Detector/issues/5
+
 v0.1.21
 -------
 
