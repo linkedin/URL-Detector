@@ -114,7 +114,8 @@ public class Url {
     }
 
     url.append(getHost());
-    if (getPort() > 0 && getPort() != SCHEME_PORT_MAP.get(getScheme())) {
+    Integer schemePort = SCHEME_PORT_MAP.get(getScheme());
+    if (getPort() > 0 && (schemePort != null) && (getPort() != schemePort)) {
       url.append(":");
       url.append(getPort());
     }
