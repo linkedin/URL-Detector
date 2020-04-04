@@ -10,7 +10,11 @@
 package com.linkedin.urls.detection;
 
 import com.linkedin.urls.Url;
+
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
+
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -164,8 +168,7 @@ public class TestUriDetection {
   @Test
   public void testIncorrectParsingHtmlWithBadOptions() {
     runTest("<a href=\"http://www.google.com/\">google.com</a>", UrlDetectorOptions.Default,
-    //Doesn't have the http since it was read as "http:// and goes to the end.
-        "www.google.com/\">google.com</a>");
+        "http://www.google.com/\">google.com</a>");
   }
 
   @Test
@@ -555,8 +558,7 @@ public class TestUriDetection {
   @Test
   public void testIpv6IncorrectParsingHtmlWithBadOptions() {
     runTest("<a href=\"http://[::AAbb:]/\">google.com</a>", UrlDetectorOptions.Default,
-    //Doesn't have the http since it was read as "http:// and goes to the end.
-        "[::AAbb:]/\">google.com</a>");
+        "http://[::AAbb:]/\">google.com</a>");
   }
 
   @Test
@@ -684,7 +686,7 @@ public class TestUriDetection {
   public void testIssue16() {
     runTest("://VIVE MARINE LE PEN//:@.", UrlDetectorOptions.Default);
   }
-  
+
   /*
    * https://github.com/URL-Detector/URL-Detector/issues/5
    */
@@ -694,6 +696,22 @@ public class TestUriDetection {
     runTest(" :u ", UrlDetectorOptions.ALLOW_SINGLE_LEVEL_DOMAIN);
   }
   
+  @DataProvider
+  private Object[][] getUrlsForSchemaDetectionInHtml() {
+    String domain = "linkedin.com";
+    return Stream.of("http://", "https://", "ftp://", "ftps://", "http%3a//", "https%3a//", "ftp%3a//", "ftps%3a//")
+      .map(validScheme -> new Object[][]{
+        {"<a href=https://" + domain + ">link</a>", "https://" + domain},
+        {"<a href=\"https://" + domain + "\">link</a>", "https://" + domain},
+      }).flatMap(Arrays::stream)
+      .toArray(Object[][]::new);
+  }
+
+  @Test(dataProvider = "getSchemaDetectionInHtml")
+  public void testSchemaDetectionInHtml(String text, String expected) {
+    runTest(text, UrlDetectorOptions.HTML, expected);
+  }
+
   private void runTest(String text, UrlDetectorOptions options, String... expected) {
     //do the detection
     UrlDetector parser = new UrlDetector(text, options);

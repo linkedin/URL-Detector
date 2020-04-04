@@ -10,6 +10,9 @@
 package com.linkedin.urls;
 
 import java.net.MalformedURLException;
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -149,5 +152,24 @@ public class TestUrl {
     Assert.assertEquals(url.getHost(), host);
     Assert.assertEquals(url.getPort(), port);
     Assert.assertEquals(url.getFullUrl(), fullUrl);
+  }
+
+  @DataProvider
+  private Object[][] getUrlsForSchemeDetectionBySuffix() {
+    String domain = "linkedin.com";
+    return Stream.of("http://", "https://", "ftp://", "ftps://", "http%3a//", "https%3a//", "ftp%3a//", "ftps%3a//")
+      .map(validScheme -> new Object[][]{
+        {validScheme + domain, validScheme},
+        {validScheme.toUpperCase() + domain, validScheme.toUpperCase()},
+        {"sometext" + validScheme + domain, validScheme },
+        {"sometext" + validScheme.toUpperCase() + domain, validScheme.toUpperCase()}
+      }).flatMap(Arrays::stream)
+      .toArray(Object[][]::new);
+  }
+
+  @Test(dataProvider = "getUrlsForSchemeDetectionBySuffix")
+  public void testSchemeDetectionBySuffix(String text, String expected) throws MalformedURLException {
+    Url url = Url.create(text);
+    Assert.assertEquals(url.getScheme(), expected.replace("://",""));
   }
 }
