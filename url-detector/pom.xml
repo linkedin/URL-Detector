@@ -10,7 +10,6 @@
   <name>com.linkedin.urls:url-detector</name>
   <description>A Java library to detect and normalize URLs in text</description>
   <url>https://github.com/linkedin/URL-Detector</url>
-
   <licenses>
     <license>
       <name>The Apache License, Version 2.0</name>
@@ -95,10 +94,10 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-deploy-plugin</artifactId>
         <configuration>
-          <skip>true</skip>
+          <skip>false</skip>
         </configuration>
       </plugin>
-      <plugin>
+      <!--plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
         <executions>
@@ -115,17 +114,9 @@
           <nexusUrl>https://oss.sonatype.org/</nexusUrl>
           <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
-      </plugin>
+      </plugin!-->
     </plugins>
   </build>
-
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
-
 
   <developers>
     <developer>
@@ -143,4 +134,11 @@
       <organizationUrl>http://www.linkedin.com</organizationUrl>
     </developer>
   </developers>
+<distributionManagement>
+	<repository>
+		<id>bintray-linkedin-maven</id>
+		<name>linkedin-maven</name>
+		<url>https://api.bintray.com/maven/linkedin/maven/url-detector/;publish=1</url>
+	</repository>
+</distributionManagement>
 </project>
