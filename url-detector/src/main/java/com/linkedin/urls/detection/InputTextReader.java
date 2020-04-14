@@ -22,7 +22,7 @@ public class InputTextReader {
   /**
    * The content to read.
    */
-  private final char[] _content;
+  private final String _content;
 
   /**
    * The current position in the content we are looking at.
@@ -44,7 +44,7 @@ public class InputTextReader {
    * @param content The content to read.
    */
   public InputTextReader(String content) {
-    _content = content.toCharArray();
+    _content = content;
   }
 
   /**
@@ -52,7 +52,7 @@ public class InputTextReader {
    * @return The next available character.
    */
   public char read() {
-    char chr = _content[_index++];
+    char chr = _content.charAt(_index++);
     return CharUtils.isWhiteSpace(chr) ? ' ' : chr;
   }
 
@@ -61,7 +61,7 @@ public class InputTextReader {
    * @param numberChars The number of chars to peek.
    */
   public String peek(int numberChars) {
-    return new String(_content, _index, numberChars);
+    return _content.substring(_index, _index + numberChars);
   }
 
   /**
@@ -74,7 +74,7 @@ public class InputTextReader {
       throw new ArrayIndexOutOfBoundsException();
     }
 
-    return _content[_index + offset];
+    return _content.charAt(_index + offset);
   }
 
   /**
@@ -83,7 +83,7 @@ public class InputTextReader {
    * @return True if we can read this number of chars, else false.
    */
   public boolean canReadChars(int numberChars) {
-    return _content.length >= _index + numberChars;
+    return _content.length() >= _index + numberChars;
   }
 
   /**
@@ -91,7 +91,7 @@ public class InputTextReader {
    * @return True if the stream is at the end and no more can be read.
    */
   public boolean eof() {
-    return _content.length <= _index;
+    return _content.length() <= _index;
   }
 
   /**
@@ -130,17 +130,17 @@ public class InputTextReader {
   }
 
   private void checkBacktrackLoop(int backtrackLength) {
-    if (_backtracked > (_content.length * MAX_BACKTRACK_MULTIPLIER)) {
+    if (_backtracked > (_content.length() * MAX_BACKTRACK_MULTIPLIER)) {
       if (backtrackLength < MINIMUM_BACKTRACK_LENGTH) {
         backtrackLength = MINIMUM_BACKTRACK_LENGTH;
       }
 
       int start = Math.max(_index, 0);
-      if (start + backtrackLength > _content.length) {
-        backtrackLength = _content.length - start;
+      if (start + backtrackLength > _content.length()) {
+        backtrackLength = _content.length() - start;
       }
 
-      String badText = new String(_content, start, backtrackLength);
+      String badText = new String(_content.substring(start, start + backtrackLength));
       throw new NegativeArraySizeException("Backtracked max amount of characters. Endless loop detected. Bad Text: '"
           + badText + "'");
     }
