@@ -643,6 +643,12 @@ public class TestUriDetection {
     String validUrl = tmp.substring(0, tmp.length() - 1) + zoneIndex + ']';
     runTest(validUrl, UrlDetectorOptions.Default, validUrl);
   }
+
+  @Test
+  public void testColonEmbededurl() {
+   runTest("::::::::::::::::::::::http://username:password@gmail.com:::::::::::::::",
+    UrlDetectorOptions.Default, "http://username:password@gmail.com");
+  }
   @Test
   public void testNegativeArraySizeException() {
     String rawtext = "How ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\\n\\nCome ";
