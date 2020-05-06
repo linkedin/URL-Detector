@@ -643,6 +643,17 @@ public class TestUriDetection {
     String validUrl = tmp.substring(0, tmp.length() - 1) + zoneIndex + ']';
     runTest(validUrl, UrlDetectorOptions.Default, validUrl);
   }
+  @Test
+  public void testNegativeArraySizeException() {
+    String rawtext = "How ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\\n\\nCome ";
+    List<Url> urls = null;
+    try {
+      UrlDetector detector = new UrlDetector(rawtext, UrlDetectorOptions.Default);
+      urls = detector.detect();
+    } catch (NegativeArraySizeException e ) {
+      Assert.fail(e.getMessage());
+    }
+  }
 
   @Test
   public void testBacktrackInvalidUsernamePassword() {

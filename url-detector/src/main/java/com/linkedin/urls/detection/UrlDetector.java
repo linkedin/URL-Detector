@@ -491,7 +491,7 @@ public class UrlDetector {
         //everything is still ok, just remember that we found a dot or '[' in case we might need to backtrack
         _buffer.append(curr);
         rollback = true;
-      } else if (curr == '#' || curr == ' ' || curr == '/'
+      } else if (curr == '#' || curr == ' ' || curr == '/' || curr ==':'
           || checkMatchingCharacter(curr) != CharacterMatch.CharacterNotMatched) {
         //one of these characters indicates we are invalid state and should just return.
         rollback = true;
