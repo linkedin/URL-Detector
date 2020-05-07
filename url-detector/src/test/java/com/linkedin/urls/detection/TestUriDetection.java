@@ -645,6 +645,23 @@ public class TestUriDetection {
   }
 
   @Test
+  public void testColonEmbededurl() {
+   runTest("::::::::::::::::::::::http://username:password@gmail.com:::::::::::::::",
+    UrlDetectorOptions.Default, "http://username:password@gmail.com");
+  }
+  @Test
+  public void testNegativeArraySizeException() {
+    String rawtext = "How ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\\n\\nCome ";
+    List<Url> urls = null;
+    try {
+      UrlDetector detector = new UrlDetector(rawtext, UrlDetectorOptions.Default);
+      urls = detector.detect();
+    } catch (NegativeArraySizeException e ) {
+      Assert.fail(e.getMessage());
+    }
+  }
+
+  @Test
   public void testBacktrackInvalidUsernamePassword() {
     runTest("http://hello:asdf.com", UrlDetectorOptions.Default, "asdf.com");
   }
