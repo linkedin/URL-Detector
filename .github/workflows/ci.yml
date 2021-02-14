@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - '*'
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Download adaptOpenJDK11
+        run: curl -LO "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.6%2B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.6_10.tar.gz"
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+          architecture: x64
+          jdkFile: ./OpenJDK11U-jdk_x64_linux_hotspot_11.0.6_10.tar.gz
+      - name: run Tests
+        timeout-minutes: 5
+        run: ./gradlew test
