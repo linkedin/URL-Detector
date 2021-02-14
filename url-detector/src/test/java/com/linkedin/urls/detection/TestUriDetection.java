@@ -707,7 +707,7 @@ public class TestUriDetection {
       .toArray(Object[][]::new);
   }
 
-  @Test(dataProvider = "getSchemaDetectionInHtml")
+  @Test(dataProvider = "getUrlsForSchemaDetectionInHtml")
   public void testSchemaDetectionInHtml(String text, String expected) {
     runTest(text, UrlDetectorOptions.HTML, expected);
   }
